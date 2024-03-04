@@ -111,7 +111,7 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
             }}
             endIcon={editBtnIcon}
             onClick={handleEditButtonClick}>
-            {editBtnText}
+            {editingToDo ? "Save" : "Edit"}
           </Button>
           <Button
             className="btns-lol"
