@@ -1,0 +1,12 @@
+.No-Todos-Alert{
+    font-size:xx-large;
+    opacity: 0.5;
+}
+
+.To-Dos-Wrapper{
+    display: flex;
+    margin-top: 80px;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}

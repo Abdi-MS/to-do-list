@@ -1,0 +1,28 @@
+.outter-container {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 0px;
+}
+
+.new-todo-container {
+  display: flex;
+  border: 1px solid rgb(216, 216, 216);
+  min-width: 700px;
+  max-width: 100%;
+  padding: 100px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.todo-input-field {
+  min-width: 450px !important;
+  max-width: fit-content;
+}
+
+.todo-input-button {
+  margin: 10px 10px 0px 10px;
+}
+
