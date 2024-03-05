@@ -28,25 +28,29 @@ function ToDos() {
 
   return (
     <>
-      <NewToDo addToDo={createToDo} />
-      <div className="To-Dos-Wrapper">
-        {ToDoList.length === 0 ? (
-          <div className="No-Todos-Alert">
-            <span>Enter Some To-Dos to begin!</span>
-          </div>
-        ) : (
-          ToDoList.map((listitem, index) => {
-            return (
-              <OneToDo
-                toDo={listitem}
-                editToDo={editToDo}
-                deleteToDo={deleteToDo}
-                key={index}
-                index={index}
-              />
-            );
-          })
-        )}
+      <div className="app-bg">
+        <h1 className="todo-heading">My ToDo</h1>
+        <NewToDo addToDo={createToDo} />
+        <hr />
+        <div className="To-Dos-Wrapper">
+          {ToDoList.length === 0 ? (
+            <div className="No-Todos-Alert">
+              <span>Enter Some To-Dos to begin!</span>
+            </div>
+          ) : (
+            ToDoList.map((listitem, index) => {
+              return (
+                <OneToDo
+                  toDo={listitem}
+                  editToDo={editToDo}
+                  deleteToDo={deleteToDo}
+                  key={index}
+                  index={index}
+                />
+              );
+            })
+          )}
+        </div>
       </div>
     </>
   );

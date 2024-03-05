@@ -36,15 +36,15 @@ const NewToDo = ({ addToDo }) => {
         <TextField
           className="todo-input-field"
           id="NewToDo"
-          label="Enter a new To-Do"
-          variant="standard"
+          label="Input task name and then press enter to add"
+          variant="outlined"
           value={newToDo}
           onKeyDown={handleKeyPress}
           onChange={(e) => {
             setNewTodo(e.target.value);
           }}
         />
-        <div className="todo-input-btn-container">
+        {/* <div className="todo-input-btn-container">
           <Button
             className="todo-input-button"
             variant={btnType}
@@ -55,7 +55,7 @@ const NewToDo = ({ addToDo }) => {
             onClick={handleNewToDo}>
             Add To-Do
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

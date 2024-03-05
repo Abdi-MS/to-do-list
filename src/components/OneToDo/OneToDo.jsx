@@ -71,17 +71,21 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
   return (
     <div className="one-to-do">
       <div className="left-side">
-        <Checkbox
-          className="left-side-checkbox"
-          checked={toDoStatus}
-          onChange={handleToDoStatus}
-        />
+        {!editingToDo ? (
+          <Checkbox
+            className="left-side-checkbox"
+            checked={toDoStatus}
+            onChange={handleToDoStatus}
+          />
+        ) : (
+          <div></div>
+        )}
         {editingToDo == true ? (
           <div>
             <TextField
               id="text-slot"
               value={editField}
-              variant="standard"
+              variant="outlined"
               onChange={updateEditField}
               onKeyDown={handleKeyPress}></TextField>
           </div>
@@ -111,7 +115,8 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
             }}
             endIcon={editBtnIcon}
             onClick={handleEditButtonClick}>
-            {editingToDo ? "Save" : "Edit"}
+            {/* {editingToDo ? "Save" : "Edit"} */}
+            ''
           </Button>
           <Button
             className="btns-lol"
@@ -128,7 +133,7 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
             onClick={() => {
               deleteToDo(index);
             }}>
-            Delete
+            {/* Delete */}
           </Button>
         </div>
       </div>
