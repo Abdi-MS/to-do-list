@@ -46,15 +46,6 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
   return (
     <div className="one-to-do">
       <div className="left-side">
-        {/* {!editingToDo ? (
-          <Checkbox
-            className="left-side-checkbox"
-            checked={toDoStatus}
-            onChange={handleToDoStatus}
-          />
-        ) : (
-          <div></div>
-        )} */}
         {editingToDo == true ? (
           <div>
             <TextField
