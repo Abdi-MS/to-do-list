@@ -46,7 +46,7 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
   return (
     <div className="one-to-do">
       <div className="left-side">
-        {!editingToDo ? (
+        {/* {!editingToDo ? (
           <Checkbox
             className="left-side-checkbox"
             checked={toDoStatus}
@@ -54,7 +54,7 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
           />
         ) : (
           <div></div>
-        )}
+        )} */}
         {editingToDo == true ? (
           <div>
             <TextField
@@ -65,7 +65,12 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
               onKeyDown={handleKeyPress}></TextField>
           </div>
         ) : (
-          <div>
+          <div className="left-side">
+            <Checkbox
+            className="left-side-checkbox"
+            checked={toDoStatus}
+            onChange={handleToDoStatus}
+          />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
