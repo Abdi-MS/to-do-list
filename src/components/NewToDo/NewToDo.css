@@ -2,27 +2,26 @@
   display: flex !important;
   flex-direction: row;
   justify-content: center;
+  height: auto;
+  padding: 10px;
+  padding-bottom: 15px;
   align-items: center;
-  margin: 100px 0px;
+  width: auto;
 }
 
 .new-todo-container {
   display: flex;
-  border: 1px solid rgb(216, 216, 216);
-  min-width: 700px;
-  max-width: 100%;
-  padding: 100px;
+  width: 100%;
   align-items: flex-end;
   justify-content: space-between;
   gap: 10px;
 }
 
 .todo-input-field {
-  min-width: 450px !important;
+  min-width: 100% !important;
   max-width: fit-content;
 }
 
 .todo-input-button {
   margin: 10px 10px 0px 10px;
 }
-
