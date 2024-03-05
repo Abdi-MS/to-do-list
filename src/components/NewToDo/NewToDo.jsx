@@ -5,8 +5,6 @@ import "./NewToDo.css";
 
 const NewToDo = ({ addToDo }) => {
   const [newToDo, setNewTodo] = useState("");
-  const [btnHover, setBtnHover] = useState("false");
-  const [btnType, setBtnType] = useState("outlined");
 
   const handleNewToDo = () => {
     if (newToDo !== "") {
@@ -18,15 +16,6 @@ const NewToDo = ({ addToDo }) => {
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleNewToDo();
-    }
-  };
-
-  const handleBtnHover = (message) => {
-    message === "leave" ? setBtnHover(true) : setBtnHover(false);
-    if (btnHover) {
-      setBtnType("contained");
-    } else {
-      setBtnType("outlined");
     }
   };
 
@@ -44,18 +33,6 @@ const NewToDo = ({ addToDo }) => {
             setNewTodo(e.target.value);
           }}
         />
-        {/* <div className="todo-input-btn-container">
-          <Button
-            className="todo-input-button"
-            variant={btnType}
-            color="success"
-            endIcon={<SendIcon />}
-            onMouseEnter={() => handleBtnHover("enter")}
-            onMouseLeave={() => handleBtnHover("leave")}
-            onClick={handleNewToDo}>
-            Add To-Do
-          </Button>
-        </div> */}
       </div>
     </div>
   );

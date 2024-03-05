@@ -1,8 +1,3 @@
-/* .No-Todos-Alert {
-  font-size: xx-large;
-  opacity: 0.5;
-} */
-
 .No-Todos-Alert{
     display: none;
 }
@@ -19,21 +14,6 @@
   align-items: center;
   justify-items: center;
 }
-
-/* .app-wrapper {
-    background-color: aqua;
-    width: fit-content;
-    height: fit-content;
-} */
-
-/* .app-bg{
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    height: 100%;
-    width: 100%;
-} */
 
 .app-bg {
   width: 60%;
