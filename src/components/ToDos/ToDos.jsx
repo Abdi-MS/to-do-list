@@ -3,27 +3,18 @@ import { useState } from "react";
 import NewToDo from "../NewToDo/NewToDo";
 import OneToDo from "../OneToDo/OneToDo";
 import "./ToDos.css";
+import { useSelector } from "react-redux";
 
 function ToDos() {
-  const [ToDoList, setToDoList] = useState([]);
+  const ToDoList = useSelector((state) => {
+    return state.toDo.toDoList;
+  });
 
   const createToDo = (newToDo) => {
     let tempToDoList = [...ToDoList];
     tempToDoList.push(newToDo);
     console.log("new list>>> ", tempToDoList);
-    setToDoList(tempToDoList);
-  };
-
-  const editToDo = (index, updatedToDo) => {
-    let tempToDoList = [...ToDoList];
-    tempToDoList[index] = updatedToDo;
-    setToDoList(tempToDoList);
-  };
-
-  const deleteToDo = (index) => {
-    let tempToDoList = [...ToDoList];
-    tempToDoList.splice(index, 1);
-    setToDoList(tempToDoList);
+    //setToDoList(tempToDoList);
   };
 
   return (
@@ -39,15 +30,7 @@ function ToDos() {
             </div>
           ) : (
             ToDoList.map((listitem, index) => {
-              return (
-                <OneToDo
-                  toDo={listitem}
-                  editToDo={editToDo}
-                  deleteToDo={deleteToDo}
-                  key={index}
-                  index={index}
-                />
-              );
+              return <OneToDo key={index} index={index} />;
             })
           )}
         </div>

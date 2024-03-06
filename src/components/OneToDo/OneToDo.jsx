@@ -1,24 +1,36 @@
-import {
-  Checkbox,
-  IconButton,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Checkbox, IconButton, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
+import { useDispatch, useSelector } from "react-redux";
+import { reduxEditToDo, reduxDeleteToDo } from "../../redux/toDoSlice/toDoSlice";
 
-function OneToDo({ toDo, editToDo, deleteToDo, index }) {
+function OneToDo({ index }) {
+  const [toDo, setToDo] = useState("");
   const [editingToDo, setEditingToDo] = useState(false);
   const [editField, setEditField] = useState("");
   const [toDoStatus, setToDoStatus] = useState(false);
 
+  const dispatch = useDispatch();
+  const reduxToDoList = useSelector((state) => {
+    return state.toDo.toDoList;
+  });
+
   useEffect(() => {
+    setToDo(reduxToDoList[index]);
     setEditField(toDo);
-  }, [toDo]);
+  }, [editingToDo]);
+
+  const editToDo=()=>{
+    dispatch(reduxEditToDo({index:index, newToDo:editField}))
+  }
+
+  const deleteToDo=()=>{
+    dispatch(reduxDeleteToDo({delIndex:index}))
+  }
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -35,7 +47,7 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
-      editToDo(index, editField);
+      editToDo();
     }
   };
 
@@ -58,10 +70,10 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
         ) : (
           <div className="left-side">
             <Checkbox
-            className="left-side-checkbox"
-            checked={toDoStatus}
-            onChange={handleToDoStatus}
-          />
+              className="left-side-checkbox"
+              checked={toDoStatus}
+              onChange={handleToDoStatus}
+            />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
@@ -89,7 +101,7 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
             color="error"
             size="small"
             onClick={() => {
-              deleteToDo(index);
+              deleteToDo();
             }}>
             <DeleteIcon fontSize="small" className="icon-btn" />
           </IconButton>
