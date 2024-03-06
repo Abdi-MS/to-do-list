@@ -2,7 +2,7 @@ import { Checkbox, IconButton, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,20 +12,16 @@ import {
 } from "../../redux/toDoSlice/toDoSlice";
 
 function OneToDo({ index }) {
-  const [toDo, setToDo] = useState("");
   const [editingToDo, setEditingToDo] = useState(false);
-  const [editField, setEditField] = useState("");
   const [toDoStatus, setToDoStatus] = useState(false);
 
   const dispatch = useDispatch();
+  
   const reduxToDoList = useSelector((state) => {
     return state.toDo.toDoList;
   });
 
-  useEffect(() => {
-    setToDo(reduxToDoList[index]);
-    setEditField(toDo);
-  }, [editingToDo, index, reduxToDoList, toDo]);
+  const editField = useRef()
 
   const editToDo = () => {
     dispatch(reduxEditToDo({ index: index, newToDo: editField }));
@@ -37,12 +33,8 @@ function OneToDo({ index }) {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleEditButtonClick();
+      handleEditButtonClick(event);
     }
-  };
-
-  const updateEditField = (event) => {
-    setEditField(event.target.value);
   };
 
   const handleEditButtonClick = () => {
@@ -65,9 +57,9 @@ function OneToDo({ index }) {
           <div>
             <TextField
               id="text-slot"
-              value={editField}
+              value={reduxToDoList[index]}
               variant="outlined"
-              onChange={updateEditField}
+              ref = {editField}
               onKeyDown={handleKeyPress}></TextField>
           </div>
         ) : (
@@ -81,7 +73,7 @@ function OneToDo({ index }) {
               id="text-slot"
               onClick={handleToDoStatus}
               className={toDoStatus ? "textChecked todo-text" : "todo-text"}>
-              {toDo}
+              {reduxToDoList[index]}
             </Typography>
           </div>
         )}
