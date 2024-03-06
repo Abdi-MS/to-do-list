@@ -6,7 +6,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
 import { useDispatch, useSelector } from "react-redux";
-import { reduxEditToDo, reduxDeleteToDo } from "../../redux/toDoSlice/toDoSlice";
+import {
+  reduxEditToDo,
+  reduxDeleteToDo,
+} from "../../redux/toDoSlice/toDoSlice";
 
 function OneToDo({ index }) {
   const [toDo, setToDo] = useState("");
@@ -22,15 +25,15 @@ function OneToDo({ index }) {
   useEffect(() => {
     setToDo(reduxToDoList[index]);
     setEditField(toDo);
-  }, [editingToDo]);
+  }, [editingToDo, index, reduxToDoList, toDo]);
 
-  const editToDo=()=>{
-    dispatch(reduxEditToDo({index:index, newToDo:editField}))
-  }
+  const editToDo = () => {
+    dispatch(reduxEditToDo({ index: index, newToDo: editField }));
+  };
 
-  const deleteToDo=()=>{
-    dispatch(reduxDeleteToDo({delIndex:index}))
-  }
+  const deleteToDo = () => {
+    dispatch(reduxDeleteToDo({ delIndex: index }));
+  };
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -43,7 +46,7 @@ function OneToDo({ index }) {
   };
 
   const handleEditButtonClick = () => {
-    if (editingToDo == false) {
+    if (editingToDo === false) {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
@@ -58,7 +61,7 @@ function OneToDo({ index }) {
   return (
     <div className="one-to-do">
       <div className="left-side">
-        {editingToDo == true ? (
+        {editingToDo === true ? (
           <div>
             <TextField
               id="text-slot"

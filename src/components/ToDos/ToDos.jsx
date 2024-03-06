@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import NewToDo from "../NewToDo/NewToDo";
 import OneToDo from "../OneToDo/OneToDo";
 import "./ToDos.css";
@@ -9,12 +8,6 @@ function ToDos() {
   const ToDoList = useSelector((state) => {
     return state.toDo.toDoList;
   });
-
-  const createToDo = (newToDo) => {
-    let tempToDoList = [...ToDoList];
-    tempToDoList.push(newToDo);
-    console.log("new list>>> ", tempToDoList);
-  };
 
   return (
     <>
