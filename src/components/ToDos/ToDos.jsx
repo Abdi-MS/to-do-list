@@ -14,14 +14,13 @@ function ToDos() {
     let tempToDoList = [...ToDoList];
     tempToDoList.push(newToDo);
     console.log("new list>>> ", tempToDoList);
-    //setToDoList(tempToDoList);
   };
 
   return (
     <>
       <div className="app-bg">
         <h1 className="todo-heading">My ToDo</h1>
-        <NewToDo addToDo={createToDo} />
+        <NewToDo/>
         <hr />
         <div className="To-Dos-Wrapper">
           {ToDoList.length === 0 ? (
