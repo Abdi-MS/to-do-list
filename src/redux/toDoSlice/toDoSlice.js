@@ -6,21 +6,35 @@ const toDoSlice = createSlice({
     toDoList: [],
   },
   reducers: {
+    startedApp: (state) => {
+      console.log("app started");
+    },
+    loadToDos: (state, action) => {
+      state.toDoList = [...action.payload];
+    },
     addToDo: (state, action) => {
       state.toDoList.push(action.payload);
     },
     editToDo: (state, action) => {
-      const { index, newToDo } = action.payload;
+      const { index, newToDo, id } = action.payload;
       state.toDoList[index] = newToDo;
     },
     deleteToDo: (state, action) => {
-      const {delIndex} = action.payload;
+      const { delIndex } = action.payload;
       state.toDoList.splice(delIndex, 1);
+    },
+    toggleCheck: (state, action) => {
+      const { id, status } = action.payload;
+      const tempObject = state.toDoList.find((obj) => obj.id === id);
+      tempObject.checked = status;
     },
   },
 });
 
 export const {
+  startedApp,
+  loadToDos,
+  toggleCheck,
   addToDo: reduxAddToDo,
   editToDo: reduxEditToDo,
   deleteToDo: reduxDeleteToDo,

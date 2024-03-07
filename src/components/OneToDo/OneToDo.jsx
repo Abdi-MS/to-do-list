@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   reduxEditToDo,
   reduxDeleteToDo,
+  toggleCheck,
 } from "../../redux/toDoSlice/toDoSlice";
 
 function OneToDo({ index }) {
@@ -16,19 +17,29 @@ function OneToDo({ index }) {
   const [toDoStatus, setToDoStatus] = useState(false);
 
   const dispatch = useDispatch();
-  
+
   const reduxToDoList = useSelector((state) => {
     return state.toDo.toDoList;
   });
 
-  const editField = useRef()
+  const editField = useRef();
 
   const editToDo = () => {
-    dispatch(reduxEditToDo({ index: index, newToDo: editField }));
+    dispatch(
+      reduxEditToDo({
+        index: index,
+        newToDo: {
+          id: reduxToDoList[index].id,
+          text: editField.current.value,
+          checked: false,
+        },
+        id: reduxToDoList[index].id,
+      })
+    );
   };
 
   const deleteToDo = () => {
-    dispatch(reduxDeleteToDo({ delIndex: index }));
+    dispatch(reduxDeleteToDo({ delIndex: index, id: reduxToDoList[index].id }));
   };
 
   const handleKeyPress = (event) => {
@@ -48,6 +59,13 @@ function OneToDo({ index }) {
 
   const handleToDoStatus = () => {
     setToDoStatus(!toDoStatus);
+    console.log("in component >>> ", toDoStatus);
+    dispatch(
+      toggleCheck({
+        id: reduxToDoList[index].id,
+        status: toDoStatus,
+      })
+    );
   };
 
   return (
@@ -57,9 +75,9 @@ function OneToDo({ index }) {
           <div>
             <TextField
               id="text-slot"
-              value={reduxToDoList[index]}
+              defaultValue={reduxToDoList[index].text}
               variant="outlined"
-              ref = {editField}
+              inputRef={editField}
               onKeyDown={handleKeyPress}></TextField>
           </div>
         ) : (
@@ -68,12 +86,13 @@ function OneToDo({ index }) {
               className="left-side-checkbox"
               checked={toDoStatus}
               onChange={handleToDoStatus}
+              defaultValue={reduxToDoList[index].checked}
             />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
               className={toDoStatus ? "textChecked todo-text" : "todo-text"}>
-              {reduxToDoList[index]}
+              {reduxToDoList[index].text}
             </Typography>
           </div>
         )}

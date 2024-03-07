@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NewToDo from "../NewToDo/NewToDo";
 import OneToDo from "../OneToDo/OneToDo";
 import "./ToDos.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { startedApp } from "../../redux/toDoSlice/toDoSlice";
 
 function ToDos() {
   const ToDoList = useSelector((state) => {
     return state.toDo.toDoList;
   });
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(startedApp());
+  }, []);
+
   return (
     <>
       <div className="app-bg">
         <h1 className="todo-heading">My ToDo</h1>
-        <NewToDo/>
+        <NewToDo nextId={ToDoList.length + 1}/>
         <hr />
         <div className="To-Dos-Wrapper">
           {ToDoList.length === 0 ? (
@@ -22,7 +28,7 @@ function ToDos() {
             </div>
           ) : (
             ToDoList.map((listitem, index) => {
-              return <OneToDo key={index} index={index} />;
+              return <OneToDo key={index} index={index} id={listitem.id}/>;
             })
           )}
         </div>
