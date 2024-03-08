@@ -25,21 +25,13 @@ function* deleteToDoInJSON(action) {
 }
 
 function* loadDataFromJSON() {
-  console.log("data >>> ");
   const data = yield call(() => getToDosFromJSON());
-  console.log(data);
   yield put(loadToDos(data));
 }
 
 function* toggleCheckInJSON(action) {
   const { id, status } = action.payload;
   const object = yield call(() => getToDoById(id));
-  console.log("object before >>> ")
-  console.log(object)
-  console.log("changing status to >>> ", status)
-  object.checked = status;
-  console.log("object after >>> ")
-  console.log(object)
   yield call(() => putToDoInJSON(id, object));
 }
 

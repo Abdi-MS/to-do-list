@@ -19,8 +19,6 @@ const postToDoToJSON = async (toDo) => {
 };
 
 const putToDoInJSON = async (id, newToDo) => {
-    console.log("saving object >>> ")
-    console.log(newToDo)
   await axios.put(`${BASE_URL}/toDos/${id}`, newToDo);
 };
 

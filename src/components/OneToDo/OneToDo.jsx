@@ -59,7 +59,6 @@ function OneToDo({ index }) {
 
   const handleToDoStatus = () => {
     setToDoStatus(!toDoStatus);
-    console.log("in component >>> ", toDoStatus);
     dispatch(
       toggleCheck({
         id: reduxToDoList[index].id,

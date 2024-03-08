@@ -7,7 +7,6 @@ const toDoSlice = createSlice({
   },
   reducers: {
     startedApp: (state) => {
-      console.log("app started");
     },
     loadToDos: (state, action) => {
       state.toDoList = [...action.payload];
