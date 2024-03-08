@@ -35,8 +35,8 @@ export const {
   startedApp,
   loadToDos,
   toggleCheck,
-  addToDo: reduxAddToDo,
-  editToDo: reduxEditToDo,
-  deleteToDo: reduxDeleteToDo,
+  addToDo,
+  editToDo,
+  deleteToDo,
 } = toDoSlice.actions;
 export default toDoSlice.reducer;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { useDispatch } from "react-redux";
-import { reduxAddToDo } from "../../redux/toDoSlice/toDoSlice";
+import { addToDo as reduxAddToDo } from "../../redux/toDoSlice/toDoSlice";
 import {v4 as uuidv4} from 'uuid'
 
 const NewToDo = ({ nextId }) => {

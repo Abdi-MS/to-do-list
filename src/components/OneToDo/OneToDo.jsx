@@ -7,8 +7,8 @@ import { useState } from "react";
 import "./OneToDo.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  reduxEditToDo,
-  reduxDeleteToDo,
+  editToDo as reduxEditToDo,
+  deleteToDo as reduxDeleteToDo,
   toggleCheck,
 } from "../../redux/toDoSlice/toDoSlice";
 
@@ -31,7 +31,7 @@ function OneToDo({ index }) {
         newToDo: {
           id: reduxToDoList[index].id,
           text: editField.current.value,
-          checked: false,
+          checked: reduxToDoList[index].checked,
         },
         id: reduxToDoList[index].id,
       })
@@ -84,9 +84,8 @@ function OneToDo({ index }) {
           <div className="left-side">
             <Checkbox
               className="left-side-checkbox"
-              checked={toDoStatus}
+              checked={!reduxToDoList[index].checked}
               onChange={handleToDoStatus}
-              defaultValue={reduxToDoList[index].checked}
             />
             <Typography
               id="text-slot"
