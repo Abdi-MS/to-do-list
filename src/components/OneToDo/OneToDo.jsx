@@ -1,72 +1,90 @@
-import {
-  Checkbox,
-  IconButton,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Checkbox, IconButton, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  editToDo as reduxEditToDo,
+  deleteToDo as reduxDeleteToDo,
+} from "../../redux/toDoSlice/toDoSlice";
 
-function OneToDo({ toDo, editToDo, deleteToDo, index }) {
+function OneToDo({ index }) {
   const [editingToDo, setEditingToDo] = useState(false);
-  const [editField, setEditField] = useState("");
   const [toDoStatus, setToDoStatus] = useState(false);
 
-  useEffect(() => {
-    setEditField(toDo);
-  }, [toDo]);
+  const dispatch = useDispatch();
+
+  const reduxToDoList = useSelector((state) => {
+    return state.toDo.toDoList;
+  });
+
+  const editField = useRef();
+
+  const editToDo = () => {
+    dispatch(
+      reduxEditToDo({
+        text: editField.current.value,
+        id: reduxToDoList[index].id,
+      })
+    );
+  };
+
+  const deleteToDo = () => {
+    dispatch(reduxDeleteToDo({ delIndex: index, id: reduxToDoList[index].id }));
+  };
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleEditButtonClick();
+      handleEditButtonClick(event);
     }
   };
 
-  const updateEditField = (event) => {
-    setEditField(event.target.value);
-  };
-
   const handleEditButtonClick = () => {
-    if (editingToDo == false) {
+    if (editingToDo === false) {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
-      editToDo(index, editField);
+      editToDo();
     }
   };
 
   const handleToDoStatus = () => {
     setToDoStatus(!toDoStatus);
+    dispatch(
+      reduxEditToDo({
+        checked: toDoStatus,
+        id: reduxToDoList[index].id,
+      })
+    );
   };
 
   return (
     <div className="one-to-do">
       <div className="left-side">
-        {editingToDo == true ? (
+        {editingToDo === true ? (
           <div>
             <TextField
               id="text-slot"
-              value={editField}
+              defaultValue={reduxToDoList[index].text}
               variant="outlined"
-              onChange={updateEditField}
+              inputRef={editField}
               onKeyDown={handleKeyPress}></TextField>
           </div>
         ) : (
           <div className="left-side">
             <Checkbox
-            className="left-side-checkbox"
-            checked={toDoStatus}
-            onChange={handleToDoStatus}
-          />
+              className="left-side-checkbox"
+              checked={!reduxToDoList[index].checked}
+              onChange={handleToDoStatus}
+            />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
               className={toDoStatus ? "textChecked todo-text" : "todo-text"}>
-              {toDo}
+              {reduxToDoList[index].text}
             </Typography>
           </div>
         )}
@@ -89,7 +107,7 @@ function OneToDo({ toDo, editToDo, deleteToDo, index }) {
             color="error"
             size="small"
             onClick={() => {
-              deleteToDo(index);
+              deleteToDo();
             }}>
             <DeleteIcon fontSize="small" className="icon-btn" />
           </IconButton>

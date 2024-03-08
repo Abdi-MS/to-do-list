@@ -1,10 +1,22 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import { TextField } from "@mui/material";
 import "./NewToDo.css";
+import { useDispatch } from "react-redux";
+import { addToDo as reduxAddToDo } from "../../redux/toDoSlice/toDoSlice";
+import {v4 as uuidv4} from 'uuid'
 
-const NewToDo = ({ addToDo }) => {
+const NewToDo = ({ nextId }) => {
   const [newToDo, setNewTodo] = useState("");
+  const dispatch = useDispatch();
+
+  const addToDo = (text) => {
+    const newToDoObj = {
+      id: uuidv4(),
+      text: text,
+      checked: true,
+    };
+    dispatch(reduxAddToDo(newToDoObj));
+  };
 
   const handleNewToDo = () => {
     if (newToDo !== "") {
