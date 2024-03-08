@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   editToDo as reduxEditToDo,
   deleteToDo as reduxDeleteToDo,
-  toggleCheck,
 } from "../../redux/toDoSlice/toDoSlice";
 
 function OneToDo({ index }) {
@@ -27,12 +26,7 @@ function OneToDo({ index }) {
   const editToDo = () => {
     dispatch(
       reduxEditToDo({
-        index: index,
-        newToDo: {
-          id: reduxToDoList[index].id,
-          text: editField.current.value,
-          checked: reduxToDoList[index].checked,
-        },
+        text: editField.current.value,
         id: reduxToDoList[index].id,
       })
     );
@@ -60,9 +54,9 @@ function OneToDo({ index }) {
   const handleToDoStatus = () => {
     setToDoStatus(!toDoStatus);
     dispatch(
-      toggleCheck({
+      reduxEditToDo({
+        checked: toDoStatus,
         id: reduxToDoList[index].id,
-        status: toDoStatus,
       })
     );
   };

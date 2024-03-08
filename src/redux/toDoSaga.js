@@ -15,8 +15,15 @@ function* addToDoJSON(action) {
 }
 
 function* editToDoInJSON(action) {
-  const { id, newToDo } = action.payload;
-  yield call(() => putToDoInJSON(id, newToDo));
+  const { id, text, checked } = action?.payload;
+  console.log(action.payload);
+  const object = yield call(() => getToDoById(id));
+  if (text) {
+    object.text = text;
+  } else {
+    object.checked = checked;
+  }
+  yield call(() => putToDoInJSON(id, object));
 }
 
 function* deleteToDoInJSON(action) {
@@ -29,18 +36,11 @@ function* loadDataFromJSON() {
   yield put(loadToDos(data));
 }
 
-function* toggleCheckInJSON(action) {
-  const { id, status } = action.payload;
-  const object = yield call(() => getToDoById(id));
-  yield call(() => putToDoInJSON(id, object));
-}
-
 function* toDoSaga() {
   yield takeEvery("toDo/addToDo", addToDoJSON);
   yield takeEvery("toDo/startedApp", loadDataFromJSON);
   yield takeEvery("toDo/editToDo", editToDoInJSON);
   yield takeEvery("toDo/deleteToDo", deleteToDoInJSON);
-  yield takeEvery("toDo/toggleCheck", toggleCheckInJSON);
 }
 
 export default toDoSaga;

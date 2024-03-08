@@ -19,7 +19,7 @@ function ToDos() {
     <>
       <div className="app-bg">
         <h1 className="todo-heading">My ToDo</h1>
-        <NewToDo nextId={ToDoList.length + 1}/>
+        <NewToDo nextId={ToDoList.length + 1} />
         <hr />
         <div className="To-Dos-Wrapper">
           {ToDoList.length === 0 ? (
@@ -28,7 +28,9 @@ function ToDos() {
             </div>
           ) : (
             ToDoList.map((listitem, index) => {
-              return <OneToDo key={index} index={index} id={listitem.id}/>;
+              console.log("list here >>> ");
+              console.log(listitem);
+              return <OneToDo key={index} index={index} id={listitem.id} />;
             })
           )}
         </div>

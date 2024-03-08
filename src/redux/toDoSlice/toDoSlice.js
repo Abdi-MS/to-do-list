@@ -6,8 +6,7 @@ const toDoSlice = createSlice({
     toDoList: [],
   },
   reducers: {
-    startedApp: (state) => {
-    },
+    startedApp: (state) => {},
     loadToDos: (state, action) => {
       state.toDoList = [...action.payload];
     },
@@ -15,17 +14,17 @@ const toDoSlice = createSlice({
       state.toDoList.push(action.payload);
     },
     editToDo: (state, action) => {
-      const { index, newToDo, id } = action.payload;
-      state.toDoList[index] = newToDo;
+      const { id, text, checked } = action?.payload;
+      const index = state.toDoList.findIndex((toDo) => toDo.id === id);
+      if (text) {
+        state.toDoList[index].text = text;
+      } else {
+        state.toDoList[index].checked = checked;
+      }
     },
     deleteToDo: (state, action) => {
       const { delIndex } = action.payload;
       state.toDoList.splice(delIndex, 1);
-    },
-    toggleCheck: (state, action) => {
-      const { id, status } = action.payload;
-      const tempObject = state.toDoList.find((obj) => obj.id === id);
-      tempObject.checked = status;
     },
   },
 });
@@ -33,7 +32,6 @@ const toDoSlice = createSlice({
 export const {
   startedApp,
   loadToDos,
-  toggleCheck,
   addToDo,
   editToDo,
   deleteToDo,
