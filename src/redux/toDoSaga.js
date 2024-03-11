@@ -15,7 +15,6 @@ function* addToDoJSON(action) {
 
 function* editToDoInJSON(action) {
   const { id, text, checked } = action?.payload;
-  console.log(action.payload);
   const object = yield call(() => getToDoById(id));
   if (text) {
     object.text = text;

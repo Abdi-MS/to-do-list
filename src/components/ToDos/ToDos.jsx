@@ -2,17 +2,14 @@ import React, { useEffect } from "react";
 import NewToDo from "../NewToDo/NewToDo";
 import OneToDo from "../OneToDo/OneToDo";
 import "./ToDos.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
 import { startedApp } from "../../redux/toDoSlice/toDoSlice";
 
-function ToDos() {
-  const ToDoList = useSelector((state) => {
-    return state.toDo.toDoList;
-  });
-
+function ToDos({ ToDoList, startApp }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(startedApp());
+    // dispatch(startedApp());
+    startApp();
   }, []);
 
   return (
@@ -28,8 +25,6 @@ function ToDos() {
             </div>
           ) : (
             ToDoList.map((listitem, index) => {
-              console.log("list here >>> ");
-              console.log(listitem);
               return <OneToDo key={index} index={index} id={listitem.id} />;
             })
           )}
@@ -39,4 +34,16 @@ function ToDos() {
   );
 }
 
-export default ToDos;
+const mapStateToProps = (state) => {
+  return {
+    ToDoList: state.toDo.toDoList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    startApp: () => dispatch(startedApp()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDos);

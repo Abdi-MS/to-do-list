@@ -134,9 +134,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    editToDo: (id, text) => dispatch(reduxEditToDo({ id, text })),
-    deleteToDo: (delIndex, id) => dispatch(reduxDeleteToDo({ delIndex, id })),
+    reduxEditToDo: (id, text) => dispatch(reduxEditToDo({ id, text })),
+    reduxDeleteToDo: (delIndex, id) =>
+      dispatch(reduxDeleteToDo({ delIndex, id })),
   };
 };
 
-export default connect(mapStateToProps)(OneToDo);
+export default connect(mapStateToProps, mapDispatchToProps)(OneToDo);
