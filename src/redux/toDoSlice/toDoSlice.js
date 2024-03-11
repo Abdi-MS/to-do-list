@@ -14,7 +14,6 @@ const toDoSlice = createSlice({
       state.toDoList.push(action.payload);
     },
     editToDo: (state, action) => {
-      console.log(action.payload)
       const { id, text, checked } = action?.payload;
       const index = state.toDoList.findIndex((toDo) => toDo.id === id);
       if (text) {

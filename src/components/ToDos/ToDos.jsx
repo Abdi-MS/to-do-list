@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import NewToDo from "../NewToDo/NewToDo";
 import OneToDo from "../OneToDo/OneToDo";
 import "./ToDos.css";
-import { useSelector, useDispatch, connect } from "react-redux";
+import { connect } from "react-redux";
 import { startedApp } from "../../redux/toDoSlice/toDoSlice";
 
 function ToDos({ ToDoList, startApp }) {
-  const dispatch = useDispatch();
   useEffect(() => {
     startApp();
   }, []);

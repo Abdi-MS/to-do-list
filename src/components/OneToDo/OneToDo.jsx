@@ -11,14 +11,14 @@ import {
   deleteToDo as reduxDeleteToDo,
 } from "../../redux/toDoSlice/toDoSlice";
 
-function OneToDo({ index, toDoList, actionEditToDo, actionDeleteToDo }) {
+function OneToDo({ index, toDoList, editToDo, actionDeleteToDo }) {
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 
   const editField = useRef();
 
-  const editToDo = () => {
-    actionEditToDo({
+  const editToDoHandler = () => {
+    editToDo({
       text: editField.current.value,
       id: toDoList[index].id,
     });
@@ -39,13 +39,13 @@ function OneToDo({ index, toDoList, actionEditToDo, actionDeleteToDo }) {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
-      editToDo();
+      editToDoHandler();
     }
   };
 
   const handleToDoStatus = () => {
     setToDoStatus(!toDoStatus);
-    actionEditToDo({
+    editToDo({
       checked: toDoStatus,
       id: toDoList[index].id,
     });
@@ -73,7 +73,7 @@ function OneToDo({ index, toDoList, actionEditToDo, actionDeleteToDo }) {
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
-              className={toDoStatus ? "textChecked todo-text" : "todo-text"}>
+              className={!toDoList[index].checked ? "textChecked todo-text" : "todo-text"}>
               {toDoList[index].text}
             </Typography>
           </div>
@@ -115,7 +115,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actionEditToDo: ({ id, text, checked }) =>
+    editToDo: ({ id, text, checked }) =>
       dispatch(reduxEditToDo({ id, text, checked })),
     actionDeleteToDo: ({ delIndex, id }) =>
       dispatch(reduxDeleteToDo({ delIndex, id })),
