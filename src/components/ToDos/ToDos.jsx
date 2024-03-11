@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import NewToDo from "../NewToDo/NewToDo";
-import OneToDo from "../OneToDo/OneToDo";
+import NewToDo from '../containers/NewToDoContainer'
+import OneToDo from '../containers/OneToDoContainer'
 import "./ToDos.css";
-import connectToDo from "./ToDosContainer";
 
 function ToDos({ ToDoList, startApp }) {
   useEffect(() => {
@@ -31,4 +30,4 @@ function ToDos({ ToDoList, startApp }) {
   );
 }
 
-export default connectToDo(ToDos);
+export default ToDos;

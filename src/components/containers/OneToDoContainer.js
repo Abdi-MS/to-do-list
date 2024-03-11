@@ -3,6 +3,7 @@ import {
   editToDo as reduxEditToDo,
   deleteToDo as reduxDeleteToDo,
 } from "../../redux/toDoSlice/toDoSlice";
+import OneToDo from "../OneToDo/OneToDo";
 
 const mapStateToProps = (state) => {
   return {
@@ -19,6 +20,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const connectOneToDo = connect(mapStateToProps, mapDispatchToProps);
-
-export default connectOneToDo;
+export default connect(mapStateToProps, mapDispatchToProps)(OneToDo);

@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import {addToDo} from "../../redux/toDoSlice/toDoSlice";
+import NewToDo from "../NewToDo/NewToDo";
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -7,6 +8,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const connectNewToDo = connect(null, mapDispatchToProps);
-
-export default connectNewToDo;
+export default connect(null, mapDispatchToProps)(NewToDo)

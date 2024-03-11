@@ -5,7 +5,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
-import connectOneToDo from "./OneToDoContainer";
+import connectOneToDo from "../containers/OneToDoContainer";
 
 function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
   const [editingToDo, setEditingToDo] = useState(false);
@@ -69,7 +69,9 @@ function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
-              className={!toDoList[index].checked ? "textChecked todo-text" : "todo-text"}>
+              className={
+                !toDoList[index].checked ? "textChecked todo-text" : "todo-text"
+              }>
               {toDoList[index].text}
             </Typography>
           </div>
@@ -103,4 +105,4 @@ function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
   );
 }
 
-export default connectOneToDo(OneToDo);
+export default OneToDo;

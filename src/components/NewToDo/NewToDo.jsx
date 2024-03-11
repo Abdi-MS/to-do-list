@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
-import connectNewToDo from "./NewToDoContainer";
+import connectNewToDo from "../containers/NewToDoContainer";
 
 const NewToDo = ({ reduxAddToDo }) => {
   const [newToDo, setNewTodo] = useState("");
@@ -48,4 +48,4 @@ const NewToDo = ({ reduxAddToDo }) => {
   );
 };
 
-export default connectNewToDo(NewToDo);
+export default NewToDo;
