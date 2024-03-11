@@ -8,7 +8,6 @@ import { startedApp } from "../../redux/toDoSlice/toDoSlice";
 function ToDos({ ToDoList, startApp }) {
   const dispatch = useDispatch();
   useEffect(() => {
-    // dispatch(startedApp());
     startApp();
   }, []);
 
