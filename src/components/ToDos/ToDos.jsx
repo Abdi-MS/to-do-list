@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import NewToDo from "../NewToDo/NewToDo";
 import OneToDo from "../OneToDo/OneToDo";
 import "./ToDos.css";
-import { connect } from "react-redux";
-import { startedApp } from "../../redux/toDoSlice/toDoSlice";
+import connectToDo from "./ToDosContainer";
 
 function ToDos({ ToDoList, startApp }) {
   useEffect(() => {
@@ -32,16 +31,4 @@ function ToDos({ ToDoList, startApp }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    ToDoList: state.toDo.toDoList,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    startApp: () => dispatch(startedApp()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ToDos);
+export default connectToDo(ToDos);

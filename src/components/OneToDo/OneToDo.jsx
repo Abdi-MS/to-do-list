@@ -5,13 +5,9 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
-import { connect } from "react-redux";
-import {
-  editToDo as reduxEditToDo,
-  deleteToDo as reduxDeleteToDo,
-} from "../../redux/toDoSlice/toDoSlice";
+import connectOneToDo from "./OneToDoContainer";
 
-function OneToDo({ index, toDoList, editToDo, actionDeleteToDo }) {
+function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 
@@ -24,8 +20,8 @@ function OneToDo({ index, toDoList, editToDo, actionDeleteToDo }) {
     });
   };
 
-  const deleteToDo = () => {
-    actionDeleteToDo({ delIndex: index, id: toDoList[index].id });
+  const deleteToDoHandler = () => {
+    deleteToDo({ delIndex: index, id: toDoList[index].id });
   };
 
   const handleKeyPress = (event) => {
@@ -97,7 +93,7 @@ function OneToDo({ index, toDoList, editToDo, actionDeleteToDo }) {
             color="error"
             size="small"
             onClick={() => {
-              deleteToDo();
+              deleteToDoHandler();
             }}>
             <DeleteIcon fontSize="small" className="icon-btn" />
           </IconButton>
@@ -107,19 +103,4 @@ function OneToDo({ index, toDoList, editToDo, actionDeleteToDo }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    toDoList: state.toDo.toDoList,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    editToDo: ({ id, text, checked }) =>
-      dispatch(reduxEditToDo({ id, text, checked })),
-    actionDeleteToDo: ({ delIndex, id }) =>
-      dispatch(reduxDeleteToDo({ delIndex, id })),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(OneToDo);
+export default connectOneToDo(OneToDo);
