@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { addToDo as reduxAddToDo } from "../../redux/toDoSlice/toDoSlice";
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from "uuid";
 
-const NewToDo = ({ nextId }) => {
+const NewToDo = ({ reduxAddToDo }) => {
   const [newToDo, setNewTodo] = useState("");
-  const dispatch = useDispatch();
 
   const addToDo = (text) => {
     const newToDoObj = {
@@ -15,7 +14,7 @@ const NewToDo = ({ nextId }) => {
       text: text,
       checked: true,
     };
-    dispatch(reduxAddToDo(newToDoObj));
+    reduxAddToDo(newToDoObj);
   };
 
   const handleNewToDo = () => {
@@ -50,4 +49,10 @@ const NewToDo = ({ nextId }) => {
   );
 };
 
-export default NewToDo;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    reduxAddToDo: (obj) => dispatch(reduxAddToDo(obj)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(NewToDo);
