@@ -5,7 +5,6 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
-import connectOneToDo from "../containers/OneToDoContainer";
 
 function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
   const [editingToDo, setEditingToDo] = useState(false);
