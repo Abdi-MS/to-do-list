@@ -1,19 +1,4 @@
 {
   "toDos": [
-    {
-      "id": "ad9cf6ea-d57f-462f-a44d-4ed2462aa637",
-      "text": "Testing 12345",
-      "checked": false
-    },
-    {
-      "id": "f46183f9-e76c-4617-aa5b-843fddf5b721",
-      "text": "Lolsies",
-      "checked": true
-    },
-    {
-      "id": "ff9e2f97-c07b-4eae-bcf9-98629662c180",
-      "text": "Why is it behaving this way",
-      "checked": true
-    }
   ]
 }
