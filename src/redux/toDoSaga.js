@@ -1,5 +1,4 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import axios from "axios";
 import { loadToDos } from "./toDoSlice/toDoSlice";
 import {
   getToDoById,
@@ -16,7 +15,6 @@ function* addToDoJSON(action) {
 
 function* editToDoInJSON(action) {
   const { id, text, checked } = action?.payload;
-  console.log(action.payload);
   const object = yield call(() => getToDoById(id));
   if (text) {
     object.text = text;

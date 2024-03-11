@@ -1,18 +1,11 @@
 import React, { useEffect } from "react";
-import NewToDo from "../NewToDo/NewToDo";
-import OneToDo from "../OneToDo/OneToDo";
+import NewToDo from '../containers/NewToDoContainer'
+import OneToDo from '../containers/OneToDoContainer'
 import "./ToDos.css";
-import { useSelector, useDispatch } from "react-redux";
-import { startedApp } from "../../redux/toDoSlice/toDoSlice";
 
-function ToDos() {
-  const ToDoList = useSelector((state) => {
-    return state.toDo.toDoList;
-  });
-
-  const dispatch = useDispatch();
+function ToDos({ ToDoList, startApp }) {
   useEffect(() => {
-    dispatch(startedApp());
+    startApp();
   }, []);
 
   return (
@@ -28,8 +21,6 @@ function ToDos() {
             </div>
           ) : (
             ToDoList.map((listitem, index) => {
-              console.log("list here >>> ");
-              console.log(listitem);
               return <OneToDo key={index} index={index} id={listitem.id} />;
             })
           )}

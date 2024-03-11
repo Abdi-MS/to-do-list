@@ -1,4 +1,4 @@
-import ToDos from "./components/ToDos/ToDos";
+import ToDos from "./components/containers/ToDosContainer";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import "./App.css";

@@ -5,35 +5,22 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  editToDo as reduxEditToDo,
-  deleteToDo as reduxDeleteToDo,
-} from "../../redux/toDoSlice/toDoSlice";
 
-function OneToDo({ index }) {
+function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const reduxToDoList = useSelector((state) => {
-    return state.toDo.toDoList;
-  });
-
   const editField = useRef();
 
-  const editToDo = () => {
-    dispatch(
-      reduxEditToDo({
-        text: editField.current.value,
-        id: reduxToDoList[index].id,
-      })
-    );
+  const editToDoHandler = () => {
+    editToDo({
+      text: editField.current.value,
+      id: toDoList[index].id,
+    });
   };
 
-  const deleteToDo = () => {
-    dispatch(reduxDeleteToDo({ delIndex: index, id: reduxToDoList[index].id }));
+  const deleteToDoHandler = () => {
+    deleteToDo({ delIndex: index, id: toDoList[index].id });
   };
 
   const handleKeyPress = (event) => {
@@ -47,18 +34,16 @@ function OneToDo({ index }) {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
-      editToDo();
+      editToDoHandler();
     }
   };
 
   const handleToDoStatus = () => {
     setToDoStatus(!toDoStatus);
-    dispatch(
-      reduxEditToDo({
-        checked: toDoStatus,
-        id: reduxToDoList[index].id,
-      })
-    );
+    editToDo({
+      checked: toDoStatus,
+      id: toDoList[index].id,
+    });
   };
 
   return (
@@ -68,7 +53,7 @@ function OneToDo({ index }) {
           <div>
             <TextField
               id="text-slot"
-              defaultValue={reduxToDoList[index].text}
+              defaultValue={toDoList[index].text}
               variant="outlined"
               inputRef={editField}
               onKeyDown={handleKeyPress}></TextField>
@@ -77,14 +62,16 @@ function OneToDo({ index }) {
           <div className="left-side">
             <Checkbox
               className="left-side-checkbox"
-              checked={!reduxToDoList[index].checked}
+              checked={!toDoList[index].checked}
               onChange={handleToDoStatus}
             />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
-              className={toDoStatus ? "textChecked todo-text" : "todo-text"}>
-              {reduxToDoList[index].text}
+              className={
+                !toDoList[index].checked ? "textChecked todo-text" : "todo-text"
+              }>
+              {toDoList[index].text}
             </Typography>
           </div>
         )}
@@ -107,7 +94,7 @@ function OneToDo({ index }) {
             color="error"
             size="small"
             onClick={() => {
-              deleteToDo();
+              deleteToDoHandler();
             }}>
             <DeleteIcon fontSize="small" className="icon-btn" />
           </IconButton>
