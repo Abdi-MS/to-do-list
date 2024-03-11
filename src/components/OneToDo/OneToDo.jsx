@@ -5,35 +5,40 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import {
   editToDo as reduxEditToDo,
   deleteToDo as reduxDeleteToDo,
 } from "../../redux/toDoSlice/toDoSlice";
 
-function OneToDo({ index }) {
+function OneToDo({ index, toDoList, reduxEditToDo, reduxDeleteToDo }) {
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const reduxToDoList = useSelector((state) => {
-    return state.toDo.toDoList;
-  });
+  // const reduxToDoList = useSelector((state) => {
+  //   return state.toDo.toDoList;
+  // });
 
   const editField = useRef();
 
   const editToDo = () => {
-    dispatch(
-      reduxEditToDo({
-        text: editField.current.value,
-        id: reduxToDoList[index].id,
-      })
-    );
+    // dispatch(
+    //   edit({
+    //     text: editField.current.value,
+    //     id: toDoList[index].id,
+    //   })
+    // );
+    reduxEditToDo({
+      text: editField.current.value,
+      id: toDoList[index].id,
+    });
   };
 
   const deleteToDo = () => {
-    dispatch(reduxDeleteToDo({ delIndex: index, id: reduxToDoList[index].id }));
+    reduxDeleteToDo({ delIndex: index, id: toDoList[index].id });
+    // dispatch(reduxDeleteToDo({ delIndex: index, id: toDoList[index].id }));
   };
 
   const handleKeyPress = (event) => {
@@ -53,12 +58,16 @@ function OneToDo({ index }) {
 
   const handleToDoStatus = () => {
     setToDoStatus(!toDoStatus);
-    dispatch(
-      reduxEditToDo({
-        checked: toDoStatus,
-        id: reduxToDoList[index].id,
-      })
-    );
+    // dispatch(
+    //   reduxEditToDo({
+    //     checked: toDoStatus,
+    //     id: toDoList[index].id,
+    //   })
+    // );
+    reduxEditToDo({
+      checked: toDoStatus,
+      id: toDoList[index].id,
+    });
   };
 
   return (
@@ -68,7 +77,7 @@ function OneToDo({ index }) {
           <div>
             <TextField
               id="text-slot"
-              defaultValue={reduxToDoList[index].text}
+              defaultValue={toDoList[index].text}
               variant="outlined"
               inputRef={editField}
               onKeyDown={handleKeyPress}></TextField>
@@ -77,14 +86,14 @@ function OneToDo({ index }) {
           <div className="left-side">
             <Checkbox
               className="left-side-checkbox"
-              checked={!reduxToDoList[index].checked}
+              checked={!toDoList[index].checked}
               onChange={handleToDoStatus}
             />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
               className={toDoStatus ? "textChecked todo-text" : "todo-text"}>
-              {reduxToDoList[index].text}
+              {toDoList[index].text}
             </Typography>
           </div>
         )}
@@ -117,4 +126,17 @@ function OneToDo({ index }) {
   );
 }
 
-export default OneToDo;
+const mapStateToProps = (state) => {
+  return {
+    toDoList: state.toDo.toDoList,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    editToDo: (id, text) => dispatch(reduxEditToDo({ id, text })),
+    deleteToDo: (delIndex, id) => dispatch(reduxDeleteToDo({ delIndex, id })),
+  };
+};
+
+export default connect(mapStateToProps)(OneToDo);
