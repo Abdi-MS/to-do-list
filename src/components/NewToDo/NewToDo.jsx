@@ -3,9 +3,20 @@ import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
 import { addToDo as reduxAddToDo } from "../../store/store";
+import { useForm } from "react-hook-form";
 
 const NewToDo = ({}) => {
-  const [newToDo, setNewTodo] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data, e) => {
+    console.log(data.ToDoField);
+    handleNewToDo(data.ToDoField);
+    e.target.reset();
+  };
 
   const addToDo = (text) => {
     const newToDoObj = {
@@ -16,33 +27,41 @@ const NewToDo = ({}) => {
     reduxAddToDo(newToDoObj);
   };
 
-  const handleNewToDo = () => {
-    if (newToDo !== "") {
-      addToDo(newToDo.trim());
-      setNewTodo("");
-    }
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handleNewToDo();
+  const handleNewToDo = (str) => {
+    if (str !== "") {
+      addToDo(str.trim());
     }
   };
 
   return (
     <div className="outter-container">
       <div className="new-todo-container">
-        <TextField
-          className="todo-input-field"
-          id="NewToDo"
-          label="Input task name and then press enter to add"
-          variant="outlined"
-          value={newToDo}
-          onKeyDown={handleKeyPress}
-          onChange={(e) => {
-            setNewTodo(e.target.value);
-          }}
-        />
+        <form className="new-todo-container" onSubmit={handleSubmit(onSubmit)}>
+          <div className="enterToDo">
+            <TextField
+              className="todo-input-field"
+              id="NewToDo"
+              placeholder="Input task name and then press enter"
+              variant="outlined"
+              {...register("ToDoField", {
+                required: "Field is required",
+                minLength: {
+                  value: 1,
+                  message: "To-Do can't be empty",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9-\s]+$/,
+                  message:
+                    "Please only enter letters of english alphabet and/or numbers",
+                },
+              })}
+            />
+            <input className="btn" type="submit" />
+          </div>
+          {errors.ToDoField && (
+            <p className="errorMsg">{errors.ToDoField.message}</p>
+          )}
+        </form>
       </div>
     </div>
   );
