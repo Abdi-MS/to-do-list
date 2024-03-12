@@ -5,7 +5,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
-import { useToDoList,editToDo, deleteToDo } from "../../store/store";
+import { useToDoList, editToDo, deleteToDo } from "../../store/store";
+import { useForm } from "react-hook-form";
 
 function OneToDo({ index }) {
   const [editingToDo, setEditingToDo] = useState(false);
@@ -14,6 +15,24 @@ function OneToDo({ index }) {
   const editField = useRef();
 
   const toDoList = useToDoList().toDoList;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data, e) => {
+    if (editingToDo === false) {
+      setEditingToDo(true);
+    } else {
+      setEditingToDo(false);
+      editToDo({
+        text: data.ToDoField,
+        id: toDoList[index].id,
+      });
+    }
+  };
 
   const editToDoHandler = () => {
     editToDo({
@@ -28,7 +47,7 @@ function OneToDo({ index }) {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleEditButtonClick(event);
+      handleSubmit(onSubmit);
     }
   };
 
@@ -54,12 +73,32 @@ function OneToDo({ index }) {
       <div className="left-side">
         {editingToDo === true ? (
           <div>
-            <TextField
-              id="text-slot"
-              defaultValue={toDoList[index].text}
-              variant="outlined"
-              inputRef={editField}
-              onKeyDown={handleKeyPress}></TextField>
+            <form
+              className="new-todo-container"
+              onSubmit={handleSubmit(onSubmit)}>
+              <TextField
+                id="text-slot"
+                defaultValue={toDoList[index].text}
+                inputRef={editField}
+                variant="outlined"
+                onKeyDown={handleKeyPress}
+                {...register("ToDoField", {
+                  required: "To-Do can't be empty",
+                  minLength: {
+                    value: 1,
+                    message: "To-Do can't be empty",
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9-\s]+$/,
+                    message:
+                      "Please only enter letters of english alphabet and/or numbers",
+                  },
+                })}
+              />
+              {errors.ToDoField && (
+                <p className="errorMsg">{errors.ToDoField.message}</p>
+              )}
+            </form>
           </div>
         ) : (
           <div className="left-side">

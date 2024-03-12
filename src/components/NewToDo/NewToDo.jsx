@@ -13,7 +13,6 @@ const NewToDo = ({}) => {
   } = useForm();
 
   const onSubmit = (data, e) => {
-    console.log(data.ToDoField);
     handleNewToDo(data.ToDoField);
     e.target.reset();
   };

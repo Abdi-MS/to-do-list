@@ -60,3 +60,8 @@
   padding: 0px !important;
   min-width: 30px !important;
 }
+
+.todo-input-field {
+  min-width: 80% !important;
+  max-width: fit-content;
+}
