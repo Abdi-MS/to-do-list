@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
+import { addToDo as reduxAddToDo } from "../../store/store";
 
-const NewToDo = ({ reduxAddToDo }) => {
+const NewToDo = ({}) => {
   const [newToDo, setNewTodo] = useState("");
 
   const addToDo = (text) => {

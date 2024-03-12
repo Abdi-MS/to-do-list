@@ -5,12 +5,15 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
+import { useToDoList,editToDo, deleteToDo } from "../../store/store";
 
-function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
+function OneToDo({ index }) {
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 
   const editField = useRef();
+
+  const toDoList = useToDoList().toDoList;
 
   const editToDoHandler = () => {
     editToDo({
