@@ -9,7 +9,6 @@ const store = hookstate(initialState);
 
 export const toDoStoreController = {
   loadToDos: (todoArray) => {
-    console.log(todoArray)
     store.toDoList.set(todoArray);
   },
   addToDo: ({ text, checked }) => {

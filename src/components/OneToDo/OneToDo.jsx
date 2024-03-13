@@ -2,7 +2,7 @@ import { Checkbox, IconButton, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
 import { useToDoList, editToDo, deleteToDo } from "../../store/store";
@@ -13,7 +13,6 @@ import { deleteToDoFromJSON, putToDoInJSON } from "../../api/todoAPIs";
 function OneToDo({ index }) {
   const editMutation = useMutation({
     mutationFn: (editedToDo) => {
-      console.log(editedToDo);
       return putToDoInJSON({ id: editedToDo.id, newToDo: editedToDo });
     },
     mutationKey: ["editToDo"],
@@ -31,6 +30,10 @@ function OneToDo({ index }) {
 
   const toDoList = useToDoList().toDoList;
 
+  useEffect(() => {
+    setToDoStatus(!toDoList[index].checked);
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -45,11 +48,10 @@ function OneToDo({ index }) {
       setEditingToDo(false);
       const editedToDo = {
         text: data.ToDoField,
-        checked: !toDoStatus,
+        checked: toDoList[index].checked,
         id: toDoList[index].id,
       };
       editToDo(editedToDo);
-      console.log(editedToDo);
       editMutation.mutate(editedToDo);
     }
   };
@@ -65,9 +67,6 @@ function OneToDo({ index }) {
   };
 
   const deleteToDoHandler = () => {
-    console.log(toDoList);
-    console.log("index >>> ", index);
-    console.log("id >>> ", toDoList[index].id);
     deleteMutation.mutate(toDoList[index].id);
     deleteToDo({ delIndex: index, id: toDoList[index].id });
   };
@@ -88,16 +87,14 @@ function OneToDo({ index }) {
   };
 
   const handleToDoStatus = () => {
-    handleSubmit(onsubmit);
-    // setToDoStatus(!toDoStatus);
-    // const editedToDo = {
-    //   text: watch("ToDoField"),
-    //   checked: toDoStatus,
-    //   id: toDoList[index].id,
-    // };
-    // console.log(editedToDo);
-    // editMutation.mutate(editedToDo);
-    // editToDo(editedToDo);
+    setToDoStatus(!toDoStatus);
+    const editedToDo = {
+      checked: toDoStatus,
+      id: toDoList[index].id,
+    };
+    editToDo(editedToDo);
+    editedToDo.text = toDoList[index].text;
+    editMutation.mutate(editedToDo);
   };
 
   return (

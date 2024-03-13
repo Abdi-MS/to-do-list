@@ -1,33 +1,38 @@
 {
   "toDos": [
     {
-      "text": "testing lol",
+      "checked": false,
+      "id": "7e1edcab-6419-4754-8da3-65a4ab9a76c2",
+      "text": "testing lol"
+    },
+    {
       "checked": true,
-      "id": "7e1edcab-6419-4754-8da3-65a4ab9a76c2"
+      "id": "277d3439-0529-4f2a-b91a-33f60e5efb3e",
+      "text": "this is a to do lol ok"
     },
     {
-      "text": "this is a to do",
       "checked": false,
-      "id": "277d3439-0529-4f2a-b91a-33f60e5efb3e"
+      "id": "b7a4fca4-e585-4989-93c4-49ee11246e2b",
+      "text": "last one ohh"
     },
     {
-      "text": "last one",
-      "checked": false,
-      "id": "b7a4fca4-e585-4989-93c4-49ee11246e2b"
+      "text": "adding a todo here",
+      "checked": true,
+      "id": "6ae63d6c-0dcd-44ad-b1c3-7813fb1ed968"
     },
     {
-      "id": "6ae63d6c-0dcd-44ad-b1c3-7813fb1ed968",
-      "text": "adding a todo",
-      "checked": true
-    },
-    {
+      "checked": true,
       "id": "43c67f47-1920-42f9-908b-466837171a41",
-      "text": "wtf",
-      "checked": true
+      "text": "wtf"
     },
     {
       "id": "a5e997de-841d-42ea-a63e-d874b88d8c3e",
       "text": "huh",
+      "checked": true
+    },
+    {
+      "id": "955e6e32-3447-4978-a18d-96a55a65fc5d",
+      "text": "This is a test",
       "checked": true
     }
   ]

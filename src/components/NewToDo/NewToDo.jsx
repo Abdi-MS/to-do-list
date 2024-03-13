@@ -16,7 +16,6 @@ const NewToDo = ({}) => {
 
   const onSubmit = (data, e) => {
     handleNewToDo(data.ToDoField);
-    addMutation.mutate(data.ToDoField);
     e.target.reset();
   };
 
@@ -32,6 +31,7 @@ const NewToDo = ({}) => {
       checked: true,
     };
     reduxAddToDo(newToDoObj);
+    addMutation.mutate(newToDoObj);
   };
 
   const handleNewToDo = (str) => {
