@@ -8,6 +8,10 @@ const initialState = {
 const store = hookstate(initialState);
 
 export const toDoStoreController = {
+  loadToDos: (todoArray) => {
+    console.log(todoArray)
+    store.toDoList.set(todoArray);
+  },
   addToDo: ({ text, checked }) => {
     const newToDo = {
       id: uuidv4(),
@@ -46,5 +50,5 @@ export const toDoStoreController = {
   },
 };
 
-export const { addToDo, editToDo, deleteToDo, useToDoList } =
+export const { addToDo, editToDo, deleteToDo, useToDoList, loadToDos } =
   toDoStoreController;

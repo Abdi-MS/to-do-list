@@ -2,13 +2,21 @@ import React, { useEffect } from "react";
 import OneToDo from "../OneToDo/OneToDo";
 import NewToDo from "../NewToDo/NewToDo";
 import "./ToDos.css";
-import { useToDoList } from "../../store/store";
+import { loadToDos, useToDoList } from "../../store/store";
+import { useQuery } from "@tanstack/react-query";
+import { getToDosFromJSON } from "../../api/todoAPIs";
 
-function ToDos({ ToDoList }) {
-  
-  // useEffect(() => {
-  //   startApp();
-  // }, []);
+function ToDos() {
+  const toDosQuery = useQuery({
+    queryKey: ["toDos"],
+    queryFn: getToDosFromJSON,
+  });
+
+  useEffect(() => {
+    if (toDosQuery.status === "success") {
+      loadToDos(toDosQuery.data);
+    }
+  }, [toDosQuery.status]);
 
   const localToDoList = useToDoList().toDoList;
 
