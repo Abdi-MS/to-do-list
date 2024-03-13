@@ -1,4 +1,3 @@
-import { call } from "redux-saga/effects";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8000";
@@ -18,7 +17,8 @@ const postToDoToJSON = async (toDo) => {
   await axios.post(`${BASE_URL}/toDos`, toDo);
 };
 
-const putToDoInJSON = async (id, newToDo) => {
+const putToDoInJSON = async ({id, newToDo}) => {
+  console.log(newToDo)
   await axios.put(`${BASE_URL}/toDos/${id}`, newToDo);
 };
 

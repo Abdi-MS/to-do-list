@@ -7,8 +7,23 @@ import { useState } from "react";
 import "./OneToDo.css";
 import { useToDoList, editToDo, deleteToDo } from "../../store/store";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { deleteToDoFromJSON, putToDoInJSON } from "../../api/todoAPIs";
 
 function OneToDo({ index }) {
+  const editMutation = useMutation({
+    mutationFn: (editedToDo) => {
+      console.log(editedToDo);
+      return putToDoInJSON({ id: editedToDo.id, newToDo: editedToDo });
+    },
+    mutationKey: ["editToDo"],
+  });
+
+  const deleteMutation = useMutation({
+    mutationKey: ["deleteToDo"],
+    mutationFn: (id) => deleteToDoFromJSON(id),
+  });
+
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 
@@ -20,6 +35,7 @@ function OneToDo({ index }) {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
 
   const onSubmit = (data, e) => {
@@ -27,21 +43,32 @@ function OneToDo({ index }) {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
-      editToDo({
+      const editedToDo = {
         text: data.ToDoField,
+        checked: !toDoStatus,
         id: toDoList[index].id,
-      });
+      };
+      editToDo(editedToDo);
+      console.log(editedToDo);
+      editMutation.mutate(editedToDo);
     }
   };
 
   const editToDoHandler = () => {
-    editToDo({
+    const editedToDo = {
       text: editField.current.value,
+      checked: toDoStatus,
       id: toDoList[index].id,
-    });
+    };
+    editMutation.mutate(editedToDo);
+    editToDo(editedToDo);
   };
 
   const deleteToDoHandler = () => {
+    console.log(toDoList);
+    console.log("index >>> ", index);
+    console.log("id >>> ", toDoList[index].id);
+    deleteMutation.mutate(toDoList[index].id);
     deleteToDo({ delIndex: index, id: toDoList[index].id });
   };
 
@@ -61,11 +88,16 @@ function OneToDo({ index }) {
   };
 
   const handleToDoStatus = () => {
-    setToDoStatus(!toDoStatus);
-    editToDo({
-      checked: toDoStatus,
-      id: toDoList[index].id,
-    });
+    handleSubmit(onsubmit);
+    // setToDoStatus(!toDoStatus);
+    // const editedToDo = {
+    //   text: watch("ToDoField"),
+    //   checked: toDoStatus,
+    //   id: toDoList[index].id,
+    // };
+    // console.log(editedToDo);
+    // editMutation.mutate(editedToDo);
+    // editToDo(editedToDo);
   };
 
   return (

@@ -1,19 +1,19 @@
 {
   "toDos": [
     {
-      "id": "7e1edcab-6419-4754-8da3-65a4ab9a76c2",
-      "text": "testing",
-      "checked": true
+      "text": "testing lol",
+      "checked": true,
+      "id": "7e1edcab-6419-4754-8da3-65a4ab9a76c2"
     },
     {
-      "id": "277d3439-0529-4f2a-b91a-33f60e5efb3e",
       "text": "this is a to do",
-      "checked": true
+      "checked": false,
+      "id": "277d3439-0529-4f2a-b91a-33f60e5efb3e"
     },
     {
-      "id": "b7a4fca4-e585-4989-93c4-49ee11246e2b",
       "text": "last one",
-      "checked": true
+      "checked": false,
+      "id": "b7a4fca4-e585-4989-93c4-49ee11246e2b"
     },
     {
       "id": "6ae63d6c-0dcd-44ad-b1c3-7813fb1ed968",

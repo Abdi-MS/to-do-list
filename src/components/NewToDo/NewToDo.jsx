@@ -4,6 +4,8 @@ import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
 import { addToDo as reduxAddToDo } from "../../store/store";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { postToDoToJSON } from "../../api/todoAPIs";
 
 const NewToDo = ({}) => {
   const {
@@ -14,8 +16,14 @@ const NewToDo = ({}) => {
 
   const onSubmit = (data, e) => {
     handleNewToDo(data.ToDoField);
+    addMutation.mutate(data.ToDoField);
     e.target.reset();
   };
+
+  const addMutation = useMutation({
+    mutationKey: ["addToDo"],
+    mutationFn: (newToDo) => postToDoToJSON(newToDo),
+  });
 
   const addToDo = (text) => {
     const newToDoObj = {
