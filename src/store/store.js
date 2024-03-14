@@ -11,9 +11,9 @@ export const toDoStoreController = {
   loadToDos: (todoArray) => {
     store.toDoList.set(todoArray);
   },
-  addToDo: ({ text, checked }) => {
+  addToDo: ({ id, text, checked }) => {
     const newToDo = {
-      id: uuidv4(),
+      id,
       text,
       checked,
     };
