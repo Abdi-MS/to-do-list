@@ -38,7 +38,6 @@ function OneToDo({ index }) {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm();
 
   const onSubmit = (data, e) => {
@@ -133,14 +132,16 @@ function OneToDo({ index }) {
           <div className="left-side">
             <Checkbox
               className="left-side-checkbox"
-              checked={!toDoList[index].checked}
+              checked={toDoList[index].checked}
               onChange={handleToDoStatus}
             />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
               className={
-                !toDoList[index].checked ? "textChecked todo-text" : "todo-text"
+                !toDoList[index].checked
+                  ? " todo-text"
+                  : "todo-text textChecked"
               }>
               {toDoList[index].text}
             </Typography>

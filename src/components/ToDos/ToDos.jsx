@@ -10,13 +10,18 @@ function ToDos() {
   const toDosQuery = useQuery({
     queryKey: ["toDos"],
     queryFn: getToDosFromJSON,
+    options: {
+      staleTime: 100,
+      refetchInterval: 200,
+    }
   });
+  
 
   useEffect(() => {
     if (toDosQuery.status === "success") {
       loadToDos(toDosQuery.data);
     }
-  }, [toDosQuery.status]);
+  }, [toDosQuery.status, toDosQuery.data]);
 
   const localToDoList = useToDoList().toDoList;
 

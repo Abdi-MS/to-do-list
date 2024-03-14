@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
-import { addToDo as reduxAddToDo } from "../../store/store";
+import { addToDo } from "../../store/store";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { postToDoToJSON } from "../../api/todoAPIs";
 
-const NewToDo = ({}) => {
+const NewToDo = () => {
   const {
     register,
     handleSubmit,
@@ -15,7 +15,17 @@ const NewToDo = ({}) => {
   } = useForm();
 
   const onSubmit = (data, e) => {
-    handleNewToDo(data.ToDoField);
+    const toDoText = data.ToDoField;
+    if (toDoText !== "") {
+      const text = toDoText.trim();
+      const newToDoObj = {
+        id: uuidv4(),
+        text: text,
+        checked: false,
+      };
+      addToDo(newToDoObj);
+      addMutation.mutate(newToDoObj);
+    }
     e.target.reset();
   };
 
@@ -23,22 +33,6 @@ const NewToDo = ({}) => {
     mutationKey: ["addToDo"],
     mutationFn: (newToDo) => postToDoToJSON(newToDo),
   });
-
-  const addToDo = (text) => {
-    const newToDoObj = {
-      id: uuidv4(),
-      text: text,
-      checked: true,
-    };
-    reduxAddToDo(newToDoObj);
-    addMutation.mutate(newToDoObj);
-  };
-
-  const handleNewToDo = (str) => {
-    if (str !== "") {
-      addToDo(str.trim());
-    }
-  };
 
   return (
     <div className="outter-container">
