@@ -35,14 +35,12 @@ function OneToDo({ index }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("here");
     if (editingToDo === false) {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
       const editedToDo = {
         text: data.ToDoField,
-        checked: toDoList[index].checked,
         id: toDoList[index].id,
       };
       editToDo(editedToDo);
@@ -67,7 +65,6 @@ function OneToDo({ index }) {
       id: toDoList[index].id,
     };
     editToDo(editedToDo);
-    editedToDo.text = toDoList[index].text;
     editMutation.mutate(editedToDo);
   };
 

@@ -18,7 +18,9 @@ const postToDoToJSON = async (toDo) => {
 };
 
 const putToDoInJSON = async ({ id, newToDo }) => {
-  await axios.put(`${BASE_URL}/toDos/${id}`, newToDo);
+  const tempToDo = await getToDoById(id);
+  const entryToDo = { ...tempToDo, ...newToDo };
+  await axios.put(`${BASE_URL}/toDos/${id}`, entryToDo);
 };
 
 const deleteToDoFromJSON = async (id) => {
