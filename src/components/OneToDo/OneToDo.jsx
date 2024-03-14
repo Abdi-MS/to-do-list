@@ -24,15 +24,10 @@ function OneToDo({ index }) {
   });
 
   const [editingToDo, setEditingToDo] = useState(false);
-  const [toDoStatus, setToDoStatus] = useState(false);
 
   const editField = useRef();
 
   const toDoList = useToDoList().toDoList;
-
-  useEffect(() => {
-    setToDoStatus(!toDoList[index].checked);
-  }, []);
 
   const {
     register,
@@ -58,7 +53,7 @@ function OneToDo({ index }) {
   const editToDoHandler = () => {
     const editedToDo = {
       text: editField.current.value,
-      checked: toDoStatus,
+      checked: toDoList[index].checked,
       id: toDoList[index].id,
     };
     editMutation.mutate(editedToDo);
@@ -86,9 +81,8 @@ function OneToDo({ index }) {
   };
 
   const handleToDoStatus = () => {
-    setToDoStatus(!toDoStatus);
     const editedToDo = {
-      checked: toDoStatus,
+      checked: !toDoList[index].checked,
       id: toDoList[index].id,
     };
     editToDo(editedToDo);
