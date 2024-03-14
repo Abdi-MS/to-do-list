@@ -2,7 +2,7 @@ import { Checkbox, IconButton, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
 import { useToDoList, editToDo, deleteToDo } from "../../store/store";
@@ -26,7 +26,6 @@ function OneToDo({ index }) {
   const [editingToDo, setEditingToDo] = useState(false);
 
   const editField = useRef();
-
   const toDoList = useToDoList().toDoList;
 
   const {
@@ -35,7 +34,8 @@ function OneToDo({ index }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data, e) => {
+  const onSubmit = (data) => {
+    console.log("here");
     if (editingToDo === false) {
       setEditingToDo(true);
     } else {
@@ -50,16 +50,6 @@ function OneToDo({ index }) {
     }
   };
 
-  const editToDoHandler = () => {
-    const editedToDo = {
-      text: editField.current.value,
-      checked: toDoList[index].checked,
-      id: toDoList[index].id,
-    };
-    editMutation.mutate(editedToDo);
-    editToDo(editedToDo);
-  };
-
   const deleteToDoHandler = () => {
     deleteMutation.mutate(toDoList[index].id);
     deleteToDo({ delIndex: index, id: toDoList[index].id });
@@ -68,15 +58,6 @@ function OneToDo({ index }) {
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSubmit(onSubmit);
-    }
-  };
-
-  const handleEditButtonClick = () => {
-    if (editingToDo === false) {
-      setEditingToDo(true);
-    } else {
-      setEditingToDo(false);
-      editToDoHandler();
     }
   };
 
@@ -148,7 +129,7 @@ function OneToDo({ index }) {
             className="btns-lol"
             color="primary"
             size="small"
-            onClick={handleEditButtonClick}>
+            onClick={handleSubmit(onSubmit)}>
             {editingToDo ? (
               <SaveIcon fontSize="small" className="icon-btn" />
             ) : (
