@@ -1,3 +1,19 @@
 {
-  "toDos": []
+  "toDos": [
+    {
+      "id": "ceb5b262-90fe-4bcd-b8d0-18691aba7758",
+      "text": "testing",
+      "checked": false
+    },
+    {
+      "id": "ded2246b-5445-4b71-8d8c-030cc2fd610b",
+      "text": "wtf",
+      "checked": false
+    },
+    {
+      "id": "9f21dd98-ddaf-4c31-8fff-124acd92c647",
+      "text": "testing123",
+      "checked": false
+    }
+  ]
 }
