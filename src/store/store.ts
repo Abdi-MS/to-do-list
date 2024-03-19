@@ -1,16 +1,26 @@
 import { hookstate, useHookstate } from "@hookstate/core";
 
-const initialState = {
+export interface ToDo {
+  id: string;
+  text: string;
+  checked: boolean;
+}
+
+interface InitialState {
+  toDoList: ToDo[];
+}
+
+const initialState: InitialState = {
   toDoList: [],
 };
 
 const store = hookstate(initialState);
 
 export const toDoStoreController = {
-  loadToDos: (todoArray) => {
+  loadToDos: (todoArray: ToDo[]) => {
     store.toDoList.set(todoArray);
   },
-  addToDo: ({ id, text, checked }) => {
+  addToDo: ({ id, text, checked }: ToDo) => {
     const newToDo = {
       id,
       text,
@@ -21,7 +31,7 @@ export const toDoStoreController = {
       return newList;
     });
   },
-  editToDo: ({ id, text, checked }) => {
+  editToDo: ({ id, text, checked }: ToDo) => {
     store.toDoList.set((list) => {
       const newList = list.map((item) => {
         if (item.id === id) {
@@ -36,7 +46,7 @@ export const toDoStoreController = {
       return newList;
     });
   },
-  deleteToDo: ({ id }) => {
+  deleteToDo: ({ id }: { id: string }) => {
     store.toDoList.set((list) => {
       const newList = list.filter((item) => item.id !== id);
       return newList;
