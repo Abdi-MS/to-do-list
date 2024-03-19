@@ -1,15 +1,15 @@
-import ToDos from "./components/containers/ToDosContainer";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import ToDos from "./components/ToDos/ToDos";
 import "./App.css";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { todoQueryClient } from "./todoQuery";
 
 function App() {
   return (
-    <Provider store={store}>
+    <QueryClientProvider client={todoQueryClient}>
       <div className="App">
         <ToDos />
       </div>
-    </Provider>
+    </QueryClientProvider>
   );
 }
 

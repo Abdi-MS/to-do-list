@@ -1,47 +1,68 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
+import { addToDo } from "../../store/store";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { postToDoToJSON } from "../../api/todoAPIs";
 
-const NewToDo = ({ reduxAddToDo }) => {
-  const [newToDo, setNewTodo] = useState("");
+const NewToDo = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const addToDo = (text) => {
-    const newToDoObj = {
-      id: uuidv4(),
-      text: text,
-      checked: true,
-    };
-    reduxAddToDo(newToDoObj);
-  };
-
-  const handleNewToDo = () => {
-    if (newToDo !== "") {
-      addToDo(newToDo.trim());
-      setNewTodo("");
+  const onSubmit = (data, e) => {
+    const toDoText = data.ToDoField;
+    if (toDoText !== "") {
+      const text = toDoText.trim();
+      const newToDoObj = {
+        id: uuidv4(),
+        text: text,
+        checked: false,
+      };
+      addToDo(newToDoObj);
+      addMutation.mutate(newToDoObj);
     }
+    e.target.reset();
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handleNewToDo();
-    }
-  };
+  const addMutation = useMutation({
+    mutationKey: ["addToDo"],
+    mutationFn: (newToDo) => postToDoToJSON(newToDo),
+  });
 
   return (
     <div className="outter-container">
       <div className="new-todo-container">
-        <TextField
-          className="todo-input-field"
-          id="NewToDo"
-          label="Input task name and then press enter to add"
-          variant="outlined"
-          value={newToDo}
-          onKeyDown={handleKeyPress}
-          onChange={(e) => {
-            setNewTodo(e.target.value);
-          }}
-        />
+        <form className="new-todo-container" onSubmit={handleSubmit(onSubmit)}>
+          <div className="enterToDo">
+            <TextField
+              className="todo-input-field"
+              id="NewToDo"
+              placeholder="Input task name and then press enter"
+              variant="outlined"
+              {...register("ToDoField", {
+                required: "Field is required",
+                minLength: {
+                  value: 1,
+                  message: "To-Do can't be empty",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9-\s]+$/,
+                  message:
+                    "Please only enter letters of english alphabet and/or numbers",
+                },
+              })}
+            />
+            <input className="btn" type="submit" />
+          </div>
+          {errors.ToDoField && (
+            <p className="errorMsg">{errors.ToDoField.message}</p>
+          )}
+        </form>
       </div>
     </div>
   );

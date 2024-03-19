@@ -5,45 +5,67 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
+import { useToDoList, editToDo, deleteToDo } from "../../store/store";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { deleteToDoFromJSON, putToDoInJSON } from "../../api/todoAPIs";
 
-function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
+function OneToDo({ index }) {
+  const editMutation = useMutation({
+    mutationFn: (editedToDo) => {
+      return putToDoInJSON({ id: editedToDo.id, newToDo: editedToDo });
+    },
+    mutationKey: ["editToDo"],
+  });
+
+  const deleteMutation = useMutation({
+    mutationKey: ["deleteToDo"],
+    mutationFn: (id) => deleteToDoFromJSON(id),
+  });
+
   const [editingToDo, setEditingToDo] = useState(false);
-  const [toDoStatus, setToDoStatus] = useState(false);
 
   const editField = useRef();
+  const toDoList = useToDoList().toDoList;
 
-  const editToDoHandler = () => {
-    editToDo({
-      text: editField.current.value,
-      id: toDoList[index].id,
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    if (editingToDo === false) {
+      setEditingToDo(true);
+    } else {
+      setEditingToDo(false);
+      const editedToDo = {
+        text: data.ToDoField,
+        id: toDoList[index].id,
+      };
+      editToDo(editedToDo);
+      editMutation.mutate(editedToDo);
+    }
   };
 
   const deleteToDoHandler = () => {
+    deleteMutation.mutate(toDoList[index].id);
     deleteToDo({ delIndex: index, id: toDoList[index].id });
   };
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleEditButtonClick(event);
-    }
-  };
-
-  const handleEditButtonClick = () => {
-    if (editingToDo === false) {
-      setEditingToDo(true);
-    } else {
-      setEditingToDo(false);
-      editToDoHandler();
+      handleSubmit(onSubmit);
     }
   };
 
   const handleToDoStatus = () => {
-    setToDoStatus(!toDoStatus);
-    editToDo({
-      checked: toDoStatus,
+    const editedToDo = {
+      checked: !toDoList[index].checked,
       id: toDoList[index].id,
-    });
+    };
+    editToDo(editedToDo);
+    editMutation.mutate(editedToDo);
   };
 
   return (
@@ -51,25 +73,47 @@ function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
       <div className="left-side">
         {editingToDo === true ? (
           <div>
-            <TextField
-              id="text-slot"
-              defaultValue={toDoList[index].text}
-              variant="outlined"
-              inputRef={editField}
-              onKeyDown={handleKeyPress}></TextField>
+            <form
+              className="new-todo-container"
+              onSubmit={handleSubmit(onSubmit)}>
+              <TextField
+                id="text-slot"
+                defaultValue={toDoList[index].text}
+                inputRef={editField}
+                variant="outlined"
+                onKeyDown={handleKeyPress}
+                {...register("ToDoField", {
+                  required: "To-Do can't be empty",
+                  minLength: {
+                    value: 1,
+                    message: "To-Do can't be empty",
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9-\s]+$/,
+                    message:
+                      "Please only enter letters of english alphabet and/or numbers",
+                  },
+                })}
+              />
+              {errors.ToDoField && (
+                <p className="errorMsg">{errors.ToDoField.message}</p>
+              )}
+            </form>
           </div>
         ) : (
           <div className="left-side">
             <Checkbox
               className="left-side-checkbox"
-              checked={!toDoList[index].checked}
+              checked={toDoList[index].checked}
               onChange={handleToDoStatus}
             />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
               className={
-                !toDoList[index].checked ? "textChecked todo-text" : "todo-text"
+                !toDoList[index].checked
+                  ? " todo-text"
+                  : "todo-text textChecked"
               }>
               {toDoList[index].text}
             </Typography>
@@ -82,7 +126,7 @@ function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
             className="btns-lol"
             color="primary"
             size="small"
-            onClick={handleEditButtonClick}>
+            onClick={handleSubmit(onSubmit)}>
             {editingToDo ? (
               <SaveIcon fontSize="small" className="icon-btn" />
             ) : (
