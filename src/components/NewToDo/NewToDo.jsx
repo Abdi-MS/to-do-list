@@ -40,6 +40,7 @@ const NewToDo = () => {
         <form className="new-todo-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="enterToDo">
             <TextField
+              autoComplete="off"
               className="todo-input-field"
               id="NewToDo"
               placeholder="Input task name and then press enter"
