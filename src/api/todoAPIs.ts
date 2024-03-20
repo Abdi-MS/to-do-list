@@ -15,7 +15,7 @@ const getToDoById = async (id: string) => {
 };
 
 const postToDoToJSON = async (toDo: ToDo) => {
-  const addedToDo = await axios.post(`${BASE_URL}/toDos`, toDo);
+  await axios.post(`${BASE_URL}/toDos`, toDo);
 };
 
 const putToDoInJSON = async ({
@@ -31,9 +31,7 @@ const putToDoInJSON = async ({
 };
 
 const deleteToDoFromJSON = async (id: string) => {
-  let temp = await getToDosFromJSON();
   await axios.delete(`${BASE_URL}/toDos/${id}`);
-  temp = await getToDosFromJSON();
 };
 
 export {
