@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ToDo } from "../../types/types";
+
+type InitialState = {
+  toDoList: ToDo[];
+};
+
+const initialState: InitialState = {
+  toDoList: [],
+};
 
 const toDoSlice = createSlice({
   name: "toDo",
-  initialState: {
-    toDoList: [],
-  },
+  initialState,
   reducers: {
     startedApp: (state) => {},
     loadToDos: (state, action) => {
@@ -29,11 +36,6 @@ const toDoSlice = createSlice({
   },
 });
 
-export const {
-  startedApp,
-  loadToDos,
-  addToDo,
-  editToDo,
-  deleteToDo,
-} = toDoSlice.actions;
+export const { startedApp, loadToDos, addToDo, editToDo, deleteToDo } =
+  toDoSlice.actions;
 export default toDoSlice.reducer;

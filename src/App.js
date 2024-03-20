@@ -1,6 +1,6 @@
 import ToDos from "./components/ToDos/ToDos";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import store from "./redux/store.ts";
 import "./App.css";
 
 function App() {

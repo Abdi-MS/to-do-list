@@ -3,7 +3,7 @@ import NewToDo from "../NewToDo/NewToDo";
 import OneToDo from "../OneToDo/OneToDo";
 import "./ToDos.css";
 import { useSelector, useDispatch } from "react-redux";
-import { startedApp } from "../../redux/toDoSlice/toDoSlice";
+import { startedApp } from "../../redux/toDoSlice/toDoSlice.ts";
 
 function ToDos() {
   const ToDoList = useSelector((state) => {

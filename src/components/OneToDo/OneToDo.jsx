@@ -9,12 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   editToDo as reduxEditToDo,
   deleteToDo as reduxDeleteToDo,
-} from "../../redux/toDoSlice/toDoSlice";
+} from "../../redux/toDoSlice/toDoSlice.ts";
 
 function OneToDo({ index }) {
   const [editingToDo, setEditingToDo] = useState(false);
-  const [toDoStatus, setToDoStatus] = useState(false);
-
+  
   const dispatch = useDispatch();
 
   const reduxToDoList = useSelector((state) => {
@@ -52,10 +51,9 @@ function OneToDo({ index }) {
   };
 
   const handleToDoStatus = () => {
-    setToDoStatus(!toDoStatus);
     dispatch(
       reduxEditToDo({
-        checked: toDoStatus,
+        checked: !reduxToDoList[index].checked,
         id: reduxToDoList[index].id,
       })
     );
@@ -77,13 +75,13 @@ function OneToDo({ index }) {
           <div className="left-side">
             <Checkbox
               className="left-side-checkbox"
-              checked={!reduxToDoList[index].checked}
+              checked={reduxToDoList[index].checked}
               onChange={handleToDoStatus}
             />
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
-              className={toDoStatus ? "textChecked todo-text" : "todo-text"}>
+              className={reduxToDoList[index].checked ? "textChecked todo-text" : "todo-text"}>
               {reduxToDoList[index].text}
             </Typography>
           </div>

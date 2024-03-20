@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { useDispatch } from "react-redux";
-import { addToDo as reduxAddToDo } from "../../redux/toDoSlice/toDoSlice";
+import { addToDo as reduxAddToDo} from '../../redux/toDoSlice/toDoSlice.ts'
 import {v4 as uuidv4} from 'uuid'
 
 const NewToDo = ({ nextId }) => {
@@ -13,7 +13,7 @@ const NewToDo = ({ nextId }) => {
     const newToDoObj = {
       id: uuidv4(),
       text: text,
-      checked: true,
+      checked: false,
     };
     dispatch(reduxAddToDo(newToDoObj));
   };
