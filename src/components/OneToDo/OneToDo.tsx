@@ -2,30 +2,35 @@ import { Checkbox, IconButton, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
-import React, { useRef } from "react";
+import React, { KeyboardEventHandler, useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   editToDo as reduxEditToDo,
   deleteToDo as reduxDeleteToDo,
-} from "../../redux/toDoSlice/toDoSlice.ts";
+} from "../../redux/toDoSlice/toDoSlice";
+import { RootState } from "../../redux/store";
 
-function OneToDo({ index }) {
+type OneToDoProps = {
+  index: number;
+};
+
+const OneToDo: React.FC<OneToDoProps> = ({ index }) => {
   const [editingToDo, setEditingToDo] = useState(false);
-  
+
   const dispatch = useDispatch();
 
-  const reduxToDoList = useSelector((state) => {
+  const reduxToDoList = useSelector((state: RootState) => {
     return state.toDo.toDoList;
   });
 
-  const editField = useRef();
+  const editField = useRef<HTMLInputElement>();
 
   const editToDo = () => {
     dispatch(
       reduxEditToDo({
-        text: editField.current.value,
+        text: editField.current?.value,
         id: reduxToDoList[index].id,
       })
     );
@@ -35,9 +40,9 @@ function OneToDo({ index }) {
     dispatch(reduxDeleteToDo({ delIndex: index, id: reduxToDoList[index].id }));
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress: KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === "Enter") {
-      handleEditButtonClick(event);
+      handleEditButtonClick();
     }
   };
 
@@ -81,7 +86,11 @@ function OneToDo({ index }) {
             <Typography
               id="text-slot"
               onClick={handleToDoStatus}
-              className={reduxToDoList[index].checked ? "textChecked todo-text" : "todo-text"}>
+              className={
+                reduxToDoList[index].checked
+                  ? "textChecked todo-text"
+                  : "todo-text"
+              }>
               {reduxToDoList[index].text}
             </Typography>
           </div>
@@ -113,6 +122,6 @@ function OneToDo({ index }) {
       </div>
     </div>
   );
-}
+};
 
 export default OneToDo;

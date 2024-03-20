@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { KeyboardEventHandler, useState } from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { useDispatch } from "react-redux";
-import { addToDo as reduxAddToDo} from '../../redux/toDoSlice/toDoSlice.ts'
-import {v4 as uuidv4} from 'uuid'
+import { addToDo as reduxAddToDo } from "../../redux/toDoSlice/toDoSlice";
+import { v4 as uuidv4 } from "uuid";
 
-const NewToDo = ({ nextId }) => {
+const NewToDo: React.FC = () => {
   const [newToDo, setNewTodo] = useState("");
   const dispatch = useDispatch();
 
-  const addToDo = (text) => {
+  const addToDo = (text: string) => {
     const newToDoObj = {
       id: uuidv4(),
       text: text,
@@ -25,7 +25,7 @@ const NewToDo = ({ nextId }) => {
     }
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress: KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === "Enter") {
       handleNewToDo();
     }
