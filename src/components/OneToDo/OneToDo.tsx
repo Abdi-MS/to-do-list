@@ -2,17 +2,26 @@ import { Checkbox, IconButton, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
-import React, { useRef } from "react";
+import React, { KeyboardEventHandler, useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
 import { useToDoList, editToDo, deleteToDo } from "../../store/store";
-import { useForm } from "react-hook-form";
+import { EditedTodoObj } from "../../../types/types";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { deleteToDoFromJSON, putToDoInJSON } from "../../api/todoAPIs";
 
-function OneToDo({ index }) {
+export type OneToDoProps = {
+  index: number;
+};
+
+type FormData = {
+  ToDoField: string;
+};
+
+const OneToDo: React.FC<OneToDoProps> = ({ index }) => {
   const editMutation = useMutation({
-    mutationFn: (editedToDo) => {
+    mutationFn: (editedToDo: EditedTodoObj) => {
       return putToDoInJSON({ id: editedToDo.id, newToDo: editedToDo });
     },
     mutationKey: ["editToDo"],
@@ -20,7 +29,7 @@ function OneToDo({ index }) {
 
   const deleteMutation = useMutation({
     mutationKey: ["deleteToDo"],
-    mutationFn: (id) => deleteToDoFromJSON(id),
+    mutationFn: (id: string) => deleteToDoFromJSON(id),
   });
 
   const [editingToDo, setEditingToDo] = useState(false);
@@ -32,14 +41,14 @@ function OneToDo({ index }) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<FormData> = (data) => {
     if (editingToDo === false) {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
-      const editedToDo = {
+      const editedToDo: EditedTodoObj = {
         text: data.ToDoField,
         id: toDoList[index].id,
       };
@@ -50,10 +59,11 @@ function OneToDo({ index }) {
 
   const deleteToDoHandler = () => {
     deleteMutation.mutate(toDoList[index].id);
-    deleteToDo({ delIndex: index, id: toDoList[index].id });
+    const deletionObj = { delIndex: index, id: toDoList[index].id };
+    deleteToDo(deletionObj);
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress: KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === "Enter") {
       handleSubmit(onSubmit);
     }
@@ -146,6 +156,6 @@ function OneToDo({ index }) {
       </div>
     </div>
   );
-}
+};
 
 export default OneToDo;

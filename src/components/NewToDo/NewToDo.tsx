@@ -3,12 +3,11 @@ import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
 import { addToDo } from "../../store/store";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { postToDoToJSON } from "../../api/todoAPIs";
-import { ToDo } from "../../store/store";
+import { ToDo } from "../../../types/types";
 import { SubmitHandler } from "react-hook-form";
-import { FormEvent } from "react";
 
 type FormData = {
   ToDoField: string;
@@ -21,10 +20,7 @@ const NewToDo = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit: SubmitHandler<FormData> = (
-    data : FormData
-    // e: FormEvent<HTMLFormElement>
-  ) => {
+  const onSubmit: SubmitHandler<FormData> = (data,event?) => {    
     const toDoText = data.ToDoField;
     if (toDoText !== "") {
       const text = toDoText.trim();
@@ -36,7 +32,7 @@ const NewToDo = () => {
       addToDo(newToDoObj);
       addMutation.mutate(newToDoObj);
     }
-    // e.currentTarget.reset();
+    event?.target.reset();
   };
 
   const addMutation = useMutation({
@@ -47,7 +43,7 @@ const NewToDo = () => {
   return (
     <div className="outter-container">
       <div className="new-todo-container">
-        <form className="new-todo-container" onSubmit={handleSubmit(e=>onSubmit(e))}>
+        <form className="new-todo-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="enterToDo">
             <TextField
               autoComplete="off"

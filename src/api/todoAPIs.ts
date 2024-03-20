@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ToDo } from "../store/store";
+import { EditedTodoObj, ToDo } from "../../types/types";
 
 const BASE_URL = "http://localhost:8000";
 
@@ -23,14 +23,14 @@ const putToDoInJSON = async ({
   newToDo,
 }: {
   id: string;
-  newToDo: ToDo;
+  newToDo: EditedTodoObj;
 }) => {
   const tempToDo = await getToDoById(id);
   const entryToDo = { ...tempToDo, ...newToDo };
   await axios.put(`${BASE_URL}/toDos/${id}`, entryToDo);
 };
 
-const deleteToDoFromJSON = async (id:string) => {
+const deleteToDoFromJSON = async (id: string) => {
   let temp = await getToDosFromJSON();
   await axios.delete(`${BASE_URL}/toDos/${id}`);
   temp = await getToDosFromJSON();

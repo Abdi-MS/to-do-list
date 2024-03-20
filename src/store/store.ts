@@ -1,12 +1,7 @@
 import { hookstate, useHookstate } from "@hookstate/core";
+import { EditedTodoObj, ToDo } from "../../types/types";
 
-export interface ToDo {
-  id: string;
-  text: string;
-  checked: boolean;
-}
-
-interface InitialState {
+type InitialState = {
   toDoList: ToDo[];
 }
 
@@ -31,7 +26,7 @@ export const toDoStoreController = {
       return newList;
     });
   },
-  editToDo: ({ id, text, checked }: ToDo) => {
+  editToDo: ({ id, text, checked }: EditedTodoObj) => {
     store.toDoList.set((list) => {
       const newList = list.map((item) => {
         if (item.id === id) {
