@@ -6,14 +6,11 @@ import { loadToDos, useToDoList } from "../../store/store";
 import { useQuery } from "@tanstack/react-query";
 import { getToDosFromJSON } from "../../api/todoAPIs";
 
-function ToDos() {
+
+const ToDos:React.FC = () => {
   const toDosQuery = useQuery({
     queryKey: ["toDos"],
-    queryFn: getToDosFromJSON,
-    options: {
-      staleTime: 100,
-      refetchInterval: 200,
-    }
+    queryFn: getToDosFromJSON
   });
   
 
@@ -29,7 +26,7 @@ function ToDos() {
     <>
       <div className="app-bg">
         <h1 className="todo-heading">My ToDo</h1>
-        <NewToDo nextId={localToDoList.length + 1} />
+        <NewToDo />
         <hr />
         <div className="To-Dos-Wrapper">
           {localToDoList.length === 0 ? (
@@ -38,7 +35,7 @@ function ToDos() {
             </div>
           ) : (
             localToDoList.map((listitem, index) => {
-              return <OneToDo key={index} index={index} id={listitem.id} />;
+              return <OneToDo key={index} index={index} />;
             })
           )}
         </div>

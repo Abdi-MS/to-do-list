@@ -6,15 +6,21 @@ import { addToDo } from "../../store/store";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { postToDoToJSON } from "../../api/todoAPIs";
+import { ToDo } from "../../../types/types";
+import { SubmitHandler } from "react-hook-form";
+
+type FormData = {
+  ToDoField: string;
+};
 
 const NewToDo = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
-  const onSubmit = (data, e) => {
+  const onSubmit: SubmitHandler<FormData> = (data,event?) => {    
     const toDoText = data.ToDoField;
     if (toDoText !== "") {
       const text = toDoText.trim();
@@ -26,12 +32,12 @@ const NewToDo = () => {
       addToDo(newToDoObj);
       addMutation.mutate(newToDoObj);
     }
-    e.target.reset();
+    event?.target.reset();
   };
 
   const addMutation = useMutation({
     mutationKey: ["addToDo"],
-    mutationFn: (newToDo) => postToDoToJSON(newToDo),
+    mutationFn: (newToDo: ToDo) => postToDoToJSON(newToDo),
   });
 
   return (
@@ -40,6 +46,7 @@ const NewToDo = () => {
         <form className="new-todo-container" onSubmit={handleSubmit(onSubmit)}>
           <div className="enterToDo">
             <TextField
+              autoComplete="off"
               className="todo-input-field"
               id="NewToDo"
               placeholder="Input task name and then press enter"
@@ -60,7 +67,7 @@ const NewToDo = () => {
             <input className="btn" type="submit" />
           </div>
           {errors.ToDoField && (
-            <p className="errorMsg">{errors.ToDoField.message}</p>
+            <p className="errorMsg">{String(errors.ToDoField.message)}</p>
           )}
         </form>
       </div>
