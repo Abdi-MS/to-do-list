@@ -12,12 +12,6 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-export type ToDosContainerProps = {
-  ToDoList: ToDo[];
-  startApp: () => void;
-  index: number;
-};
-
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     startApp: () => dispatch(startedApp()),
@@ -27,4 +21,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ToDos) as React.ComponentType<ToDosContainerProps>;
+)(ToDos);

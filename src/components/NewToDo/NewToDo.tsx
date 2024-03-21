@@ -2,7 +2,11 @@ import React, { KeyboardEventHandler, useState } from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
-import { NewToDoContainerProps } from "../containers/NewToDoContainer";
+import { ToDo } from "../../types/types";
+
+type NewToDoContainerProps = {
+  reduxAddToDo: (obj: ToDo) => void;
+};
 
 const NewToDo: React.FC<NewToDoContainerProps> = ({ reduxAddToDo }) => {
   const [newToDo, setNewTodo] = useState("");

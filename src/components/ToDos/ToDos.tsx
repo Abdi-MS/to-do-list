@@ -3,7 +3,12 @@ import NewToDo from "../containers/NewToDoContainer";
 import OneToDo from "../containers/OneToDoContainer";
 import "./ToDos.css";
 import { ToDo } from "../../types/types";
-import { ToDosContainerProps } from "../containers/ToDosContainer";
+
+type ToDosContainerProps = {
+  ToDoList: ToDo[];
+  startApp: () => void;
+  index: number;
+};
 
 const ToDos: React.FC<ToDosContainerProps> = ({ ToDoList, startApp}) => {
   useEffect(() => {
