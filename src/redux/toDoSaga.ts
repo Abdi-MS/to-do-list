@@ -19,7 +19,6 @@ function* editToDoInJSON(
   action: PayloadAction<EditedTodoObj>
 ): Generator<any, void, any> {
   const { id, text, checked } = action?.payload;
-  console.log(action.payload);
   const object = yield call(() => getToDoById(id));
   if (text) {
     object.text = text;
