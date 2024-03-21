@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { KeyboardEventHandler, useState } from "react";
 import { TextField } from "@mui/material";
 import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
 
-const NewToDo = ({ reduxAddToDo }) => {
+const NewToDo = ({ reduxAddToDo }: { reduxAddToDo: any }) => {
   const [newToDo, setNewTodo] = useState("");
 
-  const addToDo = (text) => {
+  const addToDo = (text: string) => {
     const newToDoObj = {
       id: uuidv4(),
       text: text,
@@ -22,7 +22,7 @@ const NewToDo = ({ reduxAddToDo }) => {
     }
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress: KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === "Enter") {
       handleNewToDo();
     }

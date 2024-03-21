@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import NewToDo from '../containers/NewToDoContainer'
-import OneToDo from '../containers/OneToDoContainer'
+import NewToDo from "../containers/NewToDoContainer";
+import OneToDo from "../containers/OneToDoContainer";
 import "./ToDos.css";
+import { ToDo } from "../../types/types";
 
-function ToDos({ ToDoList, startApp }) {
+function ToDos({ ToDoList, startApp }: { ToDoList: ToDo[]; startApp: any }) {
   useEffect(() => {
     startApp();
   }, []);
@@ -12,7 +13,7 @@ function ToDos({ ToDoList, startApp }) {
     <>
       <div className="app-bg">
         <h1 className="todo-heading">My ToDo</h1>
-        <NewToDo nextId={ToDoList.length + 1} />
+        <NewToDo/>
         <hr />
         <div className="To-Dos-Wrapper">
           {ToDoList.length === 0 ? (
@@ -20,8 +21,8 @@ function ToDos({ ToDoList, startApp }) {
               <span>Enter Some To-Dos to begin!</span>
             </div>
           ) : (
-            ToDoList.map((listitem, index) => {
-              return <OneToDo key={index} index={index} id={listitem.id} />;
+            ToDoList.map((listitem: ToDo, index: number) => {
+              return <OneToDo key={index} index={index} />;
             })
           )}
         </div>

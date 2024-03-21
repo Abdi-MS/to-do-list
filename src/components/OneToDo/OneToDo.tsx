@@ -2,19 +2,30 @@ import { Checkbox, IconButton, TextField, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
-import React, { useRef } from "react";
+import React, { KeyboardEventHandler, useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
+import { ToDo } from "../../types/types";
 
-function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
+function OneToDo({
+  index,
+  toDoList,
+  editToDo,
+  deleteToDo,
+}: {
+  index: number;
+  toDoList: ToDo[];
+  editToDo: any;
+  deleteToDo: any;
+}) {
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 
-  const editField = useRef();
+  const editField = useRef<HTMLInputElement>();
 
   const editToDoHandler = () => {
     editToDo({
-      text: editField.current.value,
+      text: editField.current?.value,
       id: toDoList[index].id,
     });
   };
@@ -23,9 +34,9 @@ function OneToDo({ index, toDoList, editToDo, deleteToDo }) {
     deleteToDo({ delIndex: index, id: toDoList[index].id });
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress:KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === "Enter") {
-      handleEditButtonClick(event);
+      handleEditButtonClick();
     }
   };
 
