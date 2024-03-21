@@ -3,8 +3,9 @@ import NewToDo from "../containers/NewToDoContainer";
 import OneToDo from "../containers/OneToDoContainer";
 import "./ToDos.css";
 import { ToDo } from "../../types/types";
+import { ToDosContainerProps } from "../containers/ToDosContainer";
 
-function ToDos({ ToDoList, startApp }: { ToDoList: ToDo[]; startApp: any }) {
+const ToDos: React.FC<ToDosContainerProps> = ({ ToDoList, startApp}) => {
   useEffect(() => {
     startApp();
   }, []);
@@ -13,7 +14,7 @@ function ToDos({ ToDoList, startApp }: { ToDoList: ToDo[]; startApp: any }) {
     <>
       <div className="app-bg">
         <h1 className="todo-heading">My ToDo</h1>
-        <NewToDo/>
+        <NewToDo />
         <hr />
         <div className="To-Dos-Wrapper">
           {ToDoList.length === 0 ? (
@@ -29,6 +30,6 @@ function ToDos({ ToDoList, startApp }: { ToDoList: ToDo[]; startApp: any }) {
       </div>
     </>
   );
-}
+};
 
 export default ToDos;

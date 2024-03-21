@@ -5,17 +5,20 @@ import {
 } from "../../redux/toDoSlice/toDoSlice";
 import OneToDo from "../OneToDo/OneToDo";
 import { EditedTodoObj, ToDo } from "../../types/types";
-import { RootState } from "../../redux/store";
 import { Dispatch } from "redux";
+import { RootState } from "../../redux/store";
 
 type StateProps = {
   toDoList: ToDo[];
 };
 
 type DispatchProps = {
-  editToDo: ({ id, text, checked }: EditedTodoObj) => void;
-  deleteToDo: ({ delIndex, id }: { delIndex: number; id: string }) => void;
+  editToDo: (changedToDO: EditedTodoObj) => void;
+  deleteToDo: (delObject: { delIndex: number; id: string }) => void;
 };
+
+export type OneToDoContainerProps = StateProps &
+  DispatchProps & { index: number };
 
 const mapStateToProps = (state: RootState): StateProps => {
   return {
@@ -25,14 +28,9 @@ const mapStateToProps = (state: RootState): StateProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
-    editToDo: ({ id, text, checked }) =>
-      dispatch(reduxEditToDo({ id, text, checked })),
-    deleteToDo: ({ delIndex, id }) =>
-      dispatch(reduxDeleteToDo({ delIndex, id })),
+    editToDo: (changedToDO) => dispatch(reduxEditToDo(changedToDO)),
+    deleteToDo: (delObject) => dispatch(reduxDeleteToDo(delObject)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OneToDo);
+export default connect(mapStateToProps, mapDispatchToProps)(OneToDo);

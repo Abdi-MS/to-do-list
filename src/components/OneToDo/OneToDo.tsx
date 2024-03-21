@@ -5,19 +5,9 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { KeyboardEventHandler, useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
-import { ToDo } from "../../types/types";
+import { OneToDoContainerProps } from "../containers/OneToDoContainer";
 
-function OneToDo({
-  index,
-  toDoList,
-  editToDo,
-  deleteToDo,
-}: {
-  index: number;
-  toDoList: ToDo[];
-  editToDo: any;
-  deleteToDo: any;
-}) {
+const OneToDo: React.FC<OneToDoContainerProps> = ({index, editToDo, deleteToDo, toDoList, }) => {
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 
@@ -34,7 +24,7 @@ function OneToDo({
     deleteToDo({ delIndex: index, id: toDoList[index].id });
   };
 
-  const handleKeyPress:KeyboardEventHandler<HTMLDivElement> = (event) => {
+  const handleKeyPress: KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === "Enter") {
       handleEditButtonClick();
     }
@@ -113,6 +103,6 @@ function OneToDo({
       </div>
     </div>
   );
-}
+};
 
 export default OneToDo;
