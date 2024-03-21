@@ -4,11 +4,11 @@ import "./NewToDo.css";
 import { v4 as uuidv4 } from "uuid";
 import { ToDo } from "../../types/types";
 
-type NewToDoContainerProps = {
+type NewToDoPropTypes = {
   reduxAddToDo: (obj: ToDo) => void;
 };
 
-const NewToDo: React.FC<NewToDoContainerProps> = ({ reduxAddToDo }) => {
+const NewToDo: React.FC<NewToDoPropTypes> = ({ reduxAddToDo }) => {
   const [newToDo, setNewTodo] = useState("");
 
   const addToDo = (text: string) => {

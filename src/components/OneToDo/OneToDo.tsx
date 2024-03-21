@@ -5,9 +5,14 @@ import SaveIcon from "@mui/icons-material/Save";
 import React, { KeyboardEventHandler, useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
-import { OneToDoContainerProps } from "../containers/OneToDoContainer";
+import { OneToDoPropTypes } from "../containers/OneToDoContainer";
 
-const OneToDo: React.FC<OneToDoContainerProps> = ({index, editToDo, deleteToDo, toDoList, }) => {
+const OneToDo: React.FC<OneToDoPropTypes> = ({
+  index,
+  editToDo,
+  deleteToDo,
+  toDoList,
+}) => {
   const [editingToDo, setEditingToDo] = useState(false);
   const [toDoStatus, setToDoStatus] = useState(false);
 

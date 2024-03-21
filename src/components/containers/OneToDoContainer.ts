@@ -17,8 +17,7 @@ type DispatchProps = {
   deleteToDo: (delObject: { delIndex: number; id: string }) => void;
 };
 
-export type OneToDoContainerProps = StateProps &
-  DispatchProps & { index: number };
+export type OneToDoPropTypes = StateProps & DispatchProps & { index: number };
 
 const mapStateToProps = (state: RootState): StateProps => {
   return {
