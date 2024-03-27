@@ -1,7 +1,9 @@
 import axios from "axios";
 import { EditedTodoType, ToDoType } from "../../types/types";
+import dotenv from "dotenv"
 
-const BASE_URL = "http://localhost:8000";
+dotenv.config()
+const BASE_URL = process.env.API_BASE_URL;
 
 const getToDosFromDB = async () => {
   const response = await axios.get(`${BASE_URL}/toDos`);

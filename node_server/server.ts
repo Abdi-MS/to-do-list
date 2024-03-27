@@ -4,8 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./connectDb";
 import ToDo from "./models/ToDoModel";
-import { EditedTodoType, ToDoType, mongoToDo } from "../types/types";
-import { AnyKeys } from "mongoose";
+import { EditedTodoType, ToDoType } from "../types/types";
 
 dotenv.config();
 
