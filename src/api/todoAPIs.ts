@@ -1,9 +1,9 @@
 import axios from "axios";
-import { EditedTodoObj, ToDo } from "../../types/types";
+import { EditedTodoType, ToDoType } from "../../types/types";
 
 const BASE_URL = "http://localhost:8000";
 
-const getToDosFromJSON = async () => {
+const getToDosFromDB = async () => {
   const response = await axios.get(`${BASE_URL}/toDos`);
   const data = response.data;
   return data;
@@ -14,30 +14,30 @@ const getToDoById = async (id: string) => {
   return response.data;
 };
 
-const postToDoToJSON = async (toDo: ToDo) => {
+const postToDoToDB = async (toDo: ToDoType) => {
   await axios.post(`${BASE_URL}/toDos`, toDo);
 };
 
-const putToDoInJSON = async ({
+const putToDoInDB = async ({
   id,
   newToDo,
 }: {
   id: string;
-  newToDo: EditedTodoObj;
+  newToDo: EditedTodoType;
 }) => {
   const tempToDo = await getToDoById(id);
-  const entryToDo = { ...tempToDo, ...newToDo };
-  await axios.put(`${BASE_URL}/toDos/${id}`, entryToDo);
+  const updatedToDo = { ...tempToDo, ...newToDo };
+  await axios.put(`${BASE_URL}/toDos/${id}`, updatedToDo);
 };
 
-const deleteToDoFromJSON = async (id: string) => {
+const deleteToDoFromDB = async (id: string) => {
   await axios.delete(`${BASE_URL}/toDos/${id}`);
 };
 
 export {
-  getToDosFromJSON,
+  getToDosFromDB,
   getToDoById,
-  postToDoToJSON,
-  putToDoInJSON,
-  deleteToDoFromJSON,
+  postToDoToDB,
+  putToDoInDB,
+  deleteToDoFromDB,
 };

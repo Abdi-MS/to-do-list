@@ -6,6 +6,10 @@ interface IToDo extends Document {
 }
 
 const ToDoSchema: Schema = new Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   text: {
     type: String,
     required: true,
