@@ -6,10 +6,10 @@ import React, { KeyboardEventHandler, useRef } from "react";
 import { useState } from "react";
 import "./OneToDo.css";
 import { useToDoList, editToDo, deleteToDo } from "../../store/store";
-import { EditedTodoObj } from "../../../types/types";
+import { EditedTodoType } from "../../../types/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { deleteToDoFromJSON, putToDoInJSON } from "../../api/todoAPIs";
+import { deleteToDoFromDB, putToDoInDB } from "../../api/todoAPIs";
 
 export type OneToDoProps = {
   index: number;
@@ -21,15 +21,15 @@ type FormData = {
 
 const OneToDo: React.FC<OneToDoProps> = ({ index }) => {
   const editMutation = useMutation({
-    mutationFn: (editedToDo: EditedTodoObj) => {
-      return putToDoInJSON({ id: editedToDo.id, newToDo: editedToDo });
+    mutationFn: (editedToDo: EditedTodoType) => {
+      return putToDoInDB({ id: editedToDo.id, newToDo: editedToDo });
     },
     mutationKey: ["editToDo"],
   });
 
   const deleteMutation = useMutation({
     mutationKey: ["deleteToDo"],
-    mutationFn: (id: string) => deleteToDoFromJSON(id),
+    mutationFn: (id: string) => deleteToDoFromDB(id),
   });
 
   const [editingToDo, setEditingToDo] = useState(false);
@@ -48,7 +48,7 @@ const OneToDo: React.FC<OneToDoProps> = ({ index }) => {
       setEditingToDo(true);
     } else {
       setEditingToDo(false);
-      const editedToDo: EditedTodoObj = {
+      const editedToDo: EditedTodoType = {
         text: data.ToDoField,
         id: toDoList[index].id,
       };

@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import { addToDo } from "../../store/store";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { postToDoToJSON } from "../../api/todoAPIs";
-import { ToDo } from "../../../types/types";
+import { postToDoToDB } from "../../api/todoAPIs";
+import { ToDoType } from "../../../types/types";
 import { SubmitHandler } from "react-hook-form";
 
 type FormData = {
@@ -37,7 +37,7 @@ const NewToDo = () => {
 
   const addMutation = useMutation({
     mutationKey: ["addToDo"],
-    mutationFn: (newToDo: ToDo) => postToDoToJSON(newToDo),
+    mutationFn: (newToDo: ToDoType) => postToDoToDB(newToDo),
   });
 
   return (

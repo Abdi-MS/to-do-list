@@ -4,13 +4,13 @@ import NewToDo from "../NewToDo/NewToDo";
 import "./ToDos.css";
 import { loadToDos, useToDoList } from "../../store/store";
 import { useQuery } from "@tanstack/react-query";
-import { getToDosFromJSON } from "../../api/todoAPIs";
+import { getToDosFromDB } from "../../api/todoAPIs";
 
 
 const ToDos:React.FC = () => {
   const toDosQuery = useQuery({
     queryKey: ["toDos"],
-    queryFn: getToDosFromJSON
+    queryFn: getToDosFromDB
   });
   
 

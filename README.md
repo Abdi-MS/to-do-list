@@ -1,3 +1,8 @@
+# Add following to .env:
+MONGO_URL=<"MongoDB connection string"> \
+SERVER_PORT=<"Backend listener port"> \
+API_BASE_URL=<"Base url for APIs (up to and including SERVER_PORT)"> \
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
